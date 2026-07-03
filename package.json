@@ -10,7 +10,9 @@
         "lint:fix": "eslint . --fix",
         "format": "prettier --write .",
         "format:check": "prettier --check .",
-        "typecheck": "tsc --noEmit"
+        "typecheck": "tsc --noEmit",
+        "docs:check": "node scripts/docs-check.mjs",
+        "check": "npm run lint && npm run typecheck && npm run docs:check"
     },
     "dependencies": {
         "clsx": "^2.1.1",
