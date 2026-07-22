@@ -11,8 +11,8 @@
     --text-secondary: var(--color-ink-500);
 
     /*== 表面 ==*/
-    --surface-page: var(--color-paper-100);
-    --surface-raised: var(--color-paper-50);
+    --surface-page: var(--color-paper-50);
+    --surface-raised: var(--color-paper-100);
 
     /*== 边框 ==*/
     --border-default: color-mix(
@@ -35,8 +35,8 @@
         --text-secondary: var(--color-paper-300);
 
         /*== 表面 ==*/
-        --surface-page: var(--color-ink-950);
-        --surface-raised: var(--color-paper-950);
+        --surface-page: var(--color-paper-950);
+        --surface-raised: var(--color-ink-950);
 
         /*== 边框 ==*/
         --border-default: color-mix(
