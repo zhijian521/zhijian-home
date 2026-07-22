@@ -1,10 +1,16 @@
 :root {
-    color-scheme: light dark;
+    color-scheme: light;
 
     /*== 字体 ==*/
-    --font-sans: "Noto Sans SC", "PingFang SC", "Microsoft YaHei", sans-serif;
-    --font-serif: "Noto Serif SC", "Songti SC", "STSong", serif;
-    --font-mono: "SFMono-Regular", Consolas, "Liberation Mono", monospace;
+    --font-sans:
+        system-ui, -apple-system, "Segoe UI", "PingFang SC", "Hiragino Sans GB",
+        "Microsoft YaHei", "Noto Sans CJK SC", sans-serif;
+    --font-serif:
+        "Noto Serif SC", "Source Han Serif SC", "Songti SC", "STSong", Georgia,
+        serif;
+    --font-mono:
+        "SFMono-Regular", "Cascadia Code", Consolas, "Liberation Mono",
+        monospace;
 
     /*== 文本 ==*/
     --text-primary: var(--color-ink-900);
@@ -12,7 +18,7 @@
 
     /*== 表面 ==*/
     --surface-page: var(--color-paper-50);
-    --surface-raised: var(--color-paper-100);
+    --surface-raised: var(--color-paper-0);
 
     /*== 边框 ==*/
     --border-default: color-mix(
@@ -30,13 +36,15 @@
 
 @media (prefers-color-scheme: dark) {
     :root {
+        color-scheme: dark;
+
         /*== 文本 ==*/
         --text-primary: var(--color-paper-50);
         --text-secondary: var(--color-paper-300);
 
         /*== 表面 ==*/
-        --surface-page: var(--color-paper-950);
-        --surface-raised: var(--color-ink-950);
+        --surface-page: var(--color-ink-950);
+        --surface-raised: var(--color-paper-950);
 
         /*== 边框 ==*/
         --border-default: color-mix(
