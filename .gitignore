@@ -22,13 +22,10 @@ next-env.d.ts
 .next-start.err.log
 
 # =====================================
-# 环境变量（含密钥，切勿提交）
+# 环境变量（含密钥，切勿提交；仅模板可以入库）
 # =====================================
-.env
-.env.local
-.env.development.local
-.env.test.local
-.env.production.local
+.env*
+!.env.example
 
 # =====================================
 # 日志
@@ -56,9 +53,8 @@ coverage/
 .docusaurus/
 
 # =====================================
-# 包管理锁文件
+# 其他包管理器锁文件（本项目统一使用 npm）
 # =====================================
-package-lock.json
 yarn.lock
 pnpm-lock.yaml
 
