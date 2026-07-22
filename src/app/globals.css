@@ -1,0 +1,54 @@
+html {
+    min-height: 100%;
+    background: var(--surface-page);
+    scroll-behavior: smooth;
+}
+
+body {
+    min-width: 20rem;
+    min-height: 100dvh;
+    color: var(--text-primary);
+    background: var(--surface-page);
+    font-family: var(--font-sans);
+    font-size: var(--font-size-4);
+    line-height: var(--line-height-normal);
+    text-rendering: optimizeLegibility;
+}
+
+button,
+input,
+select,
+textarea {
+    font: inherit;
+}
+
+a {
+    color: inherit;
+}
+
+img,
+picture,
+svg {
+    display: block;
+    max-width: 100%;
+}
+
+::selection {
+    color: var(--text-primary);
+    background: color-mix(
+        in srgb,
+        var(--action-primary) var(--alpha-20),
+        transparent
+    );
+}
+
+:focus-visible {
+    outline: var(--border-width-2) solid var(--border-focus);
+    outline-offset: var(--space-0-5);
+}
+
+@media (prefers-reduced-motion: reduce) {
+    html {
+        scroll-behavior: auto;
+    }
+}

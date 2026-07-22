@@ -1,7 +1,3 @@
 export default function HomePage() {
-  return (
-    <main>
-      <h1>Zhijian Home</h1>
-    </main>
-  );
+    return <h1>Zhijian</h1>;
 }
