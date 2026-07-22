@@ -1,0 +1,54 @@
+:root {
+    color-scheme: light dark;
+
+    /*== 字体 ==*/
+    --font-sans: "Noto Sans SC", "PingFang SC", "Microsoft YaHei", sans-serif;
+    --font-serif: "Noto Serif SC", "Songti SC", "STSong", serif;
+    --font-mono: "SFMono-Regular", Consolas, "Liberation Mono", monospace;
+
+    /*== 文本 ==*/
+    --text-primary: var(--color-ink-900);
+    --text-secondary: var(--color-ink-500);
+
+    /*== 表面 ==*/
+    --surface-page: var(--color-paper-100);
+    --surface-raised: var(--color-paper-50);
+
+    /*== 边框 ==*/
+    --border-default: color-mix(
+        in srgb,
+        var(--color-ink-700) var(--alpha-20),
+        transparent
+    );
+    --border-focus: var(--color-cinnabar-600);
+
+    /*== 主操作 ==*/
+    --action-primary: var(--color-cinnabar-600);
+    --action-primary-hover: var(--color-cinnabar-700);
+    --action-primary-text: var(--color-paper-50);
+}
+
+@media (prefers-color-scheme: dark) {
+    :root {
+        /*== 文本 ==*/
+        --text-primary: var(--color-paper-50);
+        --text-secondary: var(--color-paper-300);
+
+        /*== 表面 ==*/
+        --surface-page: var(--color-ink-950);
+        --surface-raised: var(--color-paper-950);
+
+        /*== 边框 ==*/
+        --border-default: color-mix(
+            in srgb,
+            var(--color-paper-200) var(--alpha-20),
+            transparent
+        );
+        --border-focus: var(--color-cinnabar-400);
+
+        /*== 主操作 ==*/
+        --action-primary: var(--color-cinnabar-400);
+        --action-primary-hover: var(--color-cinnabar-300);
+        --action-primary-text: var(--color-ink-950);
+    }
+}
