@@ -1,0 +1,89 @@
+/*============================================================================
+  site-header - 公开站点顶部品牌区样式
+
+  首屏使用透明浮顶，内容层级和交互状态统一复用当前设计令牌。
+============================================================================*/
+
+.header {
+    position: fixed;
+    z-index: var(--z-overlay);
+    inset: 0 0 auto;
+    width: 100%;
+}
+
+.container {
+    display: flex;
+    width: 100%;
+    max-width: 80rem;
+    height: 4rem;
+    align-items: center;
+    justify-content: space-between;
+    margin: 0 auto;
+    padding: 0 var(--space-4);
+}
+
+.brand {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-3);
+    color: var(--action-primary);
+    font-family: var(--font-serif);
+    font-size: var(--font-size-5);
+    font-weight: var(--font-weight-semibold);
+    text-decoration: none;
+    transition: color var(--duration-normal) var(--ease-standard);
+}
+
+.brand:hover {
+    color: var(--action-primary-hover);
+}
+
+.logo {
+    width: 2rem;
+    height: 2rem;
+    object-fit: contain;
+}
+
+.brandText {
+    display: none;
+}
+
+.nav {
+    display: none;
+    align-items: center;
+}
+
+.navLink {
+    display: inline-flex;
+    min-height: 2.5rem;
+    align-items: center;
+    border-bottom: var(--border-width-2) solid transparent;
+    padding: 0 var(--space-3);
+    color: var(--text-secondary);
+    font-size: var(--font-size-3);
+    text-decoration: none;
+    transition:
+        border-color var(--duration-normal) var(--ease-standard),
+        color var(--duration-normal) var(--ease-standard);
+}
+
+.navLink:hover {
+    border-bottom-color: var(--action-primary);
+    color: var(--action-primary);
+}
+
+@media (min-width: 40rem) {
+    .brandText {
+        display: inline;
+    }
+}
+
+@media (min-width: 48rem) {
+    .container {
+        padding: 0 var(--space-6);
+    }
+
+    .nav {
+        display: flex;
+    }
+}
