@@ -38,8 +38,6 @@
 }
 
 .title {
-    margin: 0;
-    color: var(--text-primary);
     font-family: var(--font-serif);
     font-size: var(--font-size-12);
     font-weight: var(--font-weight-semibold);
@@ -47,7 +45,6 @@
 }
 
 .sub {
-    margin: 0;
     color: var(--action-primary);
     font-size: var(--font-size-3);
     letter-spacing: var(--letter-spacing-widest);
@@ -55,7 +52,6 @@
 
 .copy {
     max-width: 36rem;
-    margin: 0;
     color: var(--text-secondary);
     font-size: var(--font-size-3);
     line-height: var(--line-height-relaxed);
