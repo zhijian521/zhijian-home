@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 
 import { ROOT_METADATA } from "@/config/metadata";
-import type { RootLayoutProps } from "@/types/app";
+import type { AppLayoutProps } from "@/types/app";
 
 /*== 样式重置 ==*/
 import "modern-css-reset/dist/reset.min.css";
@@ -13,7 +13,7 @@ import "@/styles/globals.css";
 
 export const metadata: Metadata = ROOT_METADATA;
 
-export default function RootLayout({ children }: RootLayoutProps) {
+export default function RootLayout({ children }: AppLayoutProps) {
     return (
         <html lang="zh-CN">
             <body>{children}</body>
