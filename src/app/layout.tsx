@@ -6,9 +6,9 @@ import type { RootLayoutProps } from "@/types/app";
 import "modern-css-reset/dist/reset.min.css";
 
 /*== 设计系统 ==*/
-import "./tokens.css";
-import "./theme.css";
-import "./globals.css";
+import "@/styles/tokens.css";
+import "@/styles/theme.css";
+import "@/styles/globals.css";
 
 export const metadata: Metadata = {
     title: "Zhijian Home",
