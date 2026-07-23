@@ -1,3 +1,9 @@
+import { HeroSection } from "@/components/home/hero-section";
+
 export default function HomePage() {
-    return <h1>Zhijian</h1>;
+    return (
+        <main>
+            <HeroSection />
+        </main>
+    );
 }

@@ -20,6 +20,13 @@
     --surface-page: var(--color-paper-50);
     --surface-raised: var(--color-paper-0);
 
+    /*== 覆盖层 ==*/
+    --overlay-image: color-mix(
+        in srgb,
+        var(--surface-page) var(--alpha-20),
+        transparent
+    );
+
     /*== 边框 ==*/
     --border-default: color-mix(
         in srgb,
@@ -45,6 +52,13 @@
         /*== 表面 ==*/
         --surface-page: var(--color-ink-950);
         --surface-raised: var(--color-paper-950);
+
+        /*== 覆盖层 ==*/
+        --overlay-image: color-mix(
+            in srgb,
+            var(--surface-page) var(--alpha-80),
+            transparent
+        );
 
         /*== 边框 ==*/
         --border-default: color-mix(
