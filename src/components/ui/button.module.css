@@ -1,0 +1,31 @@
+/*== 固定尺寸文字按钮 ==*/
+.root {
+    display: inline-flex;
+    height: 2rem;
+    align-items: center;
+    gap: var(--space-2);
+    border: var(--border-width-1) solid var(--border-default);
+    padding: 0 var(--space-3);
+    background: transparent;
+    color: var(--text-secondary);
+    font-size: var(--font-size-3);
+    font-weight: var(--font-weight-medium);
+    line-height: var(--line-height-normal);
+    text-decoration: none;
+    transition:
+        border-color var(--duration-normal) var(--ease-standard),
+        background-color var(--duration-normal) var(--ease-standard),
+        color var(--duration-normal) var(--ease-standard);
+}
+
+.root:hover {
+    border-color: var(--action-primary);
+    background: var(--surface-muted);
+    color: var(--action-primary);
+}
+
+.icon {
+    width: 1rem;
+    height: 1rem;
+    flex: 0 0 1rem;
+}

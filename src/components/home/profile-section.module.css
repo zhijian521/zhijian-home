@@ -1,0 +1,101 @@
+/*============================================================================
+  profile-section - 首页个人信息区样式
+
+  延续旧项目名片的宣纸底、朱砂边框和横向信息布局。
+============================================================================*/
+
+.section {
+    scroll-margin-top: 4rem;
+    padding: var(--space-16) var(--space-4);
+    background: var(--surface-page);
+}
+
+.container {
+    width: 100%;
+    max-width: 80rem;
+    margin: 0 auto;
+}
+
+/*== 个人名片 ==*/
+.profile {
+    display: flex;
+    align-items: center;
+    gap: var(--space-6);
+    border: var(--border-width-1) solid var(--action-primary);
+    padding: var(--space-6);
+    background: var(--surface-muted);
+}
+
+.avatar {
+    width: 7.5rem;
+    height: 7.5rem;
+    flex: 0 0 7.5rem;
+    border: var(--border-width-1) solid var(--border-default);
+    object-fit: cover;
+}
+
+.body {
+    min-width: 0;
+}
+
+.name {
+    font-family: var(--font-serif);
+    font-size: var(--font-size-8);
+    font-weight: var(--font-weight-semibold);
+    line-height: var(--line-height-tight);
+}
+
+.tagline {
+    margin-top: var(--space-2);
+    color: var(--action-primary);
+    font-size: var(--font-size-3);
+    letter-spacing: var(--letter-spacing-wider);
+}
+
+.bio {
+    max-width: 42rem;
+    margin-top: var(--space-4);
+    color: var(--text-secondary);
+    font-size: var(--font-size-3);
+    line-height: var(--line-height-relaxed);
+}
+
+/*== 联系操作 ==*/
+.actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-2);
+    margin-top: var(--space-6);
+}
+
+@media (min-width: 48rem) {
+    .section {
+        padding-right: var(--space-6);
+        padding-left: var(--space-6);
+    }
+}
+
+@media (max-width: 40rem) {
+    .name {
+        font-size: var(--font-size-7);
+    }
+
+    .profile {
+        flex-direction: column;
+        align-items: center;
+        gap: var(--space-4);
+        text-align: center;
+    }
+
+    .avatar {
+        width: 7rem;
+        height: 7rem;
+        flex-basis: 7rem;
+    }
+
+    .body {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+}
