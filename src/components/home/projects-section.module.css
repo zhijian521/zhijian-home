@@ -1,0 +1,81 @@
+/*== 首页开源项目区 ==*/
+.section {
+    padding: var(--space-16) var(--space-4);
+    background: var(--surface-page);
+}
+
+.container {
+    width: 100%;
+    max-width: 80rem;
+    margin: 0 auto;
+}
+
+/*== 项目卡片 ==*/
+.grid {
+    display: grid;
+    gap: var(--space-4);
+}
+
+.card {
+    display: flex;
+    min-width: 0;
+    flex-direction: column;
+    padding: var(--space-4);
+    border: var(--border-width-1) solid var(--action-primary);
+}
+
+.header {
+    display: flex;
+    align-items: center;
+    gap: var(--space-3);
+}
+
+.icon {
+    width: var(--font-size-7);
+    height: var(--font-size-7);
+    flex: 0 0 var(--font-size-7);
+    color: var(--action-primary);
+}
+
+.title {
+    min-width: 0;
+    font-family: var(--font-serif);
+    font-size: var(--font-size-6);
+    font-weight: var(--font-weight-semibold);
+    line-height: var(--line-height-tight);
+    overflow-wrap: anywhere;
+}
+
+.description {
+    margin-top: var(--space-4);
+    color: var(--text-secondary);
+    font-size: var(--font-size-3);
+    line-height: var(--line-height-relaxed);
+}
+
+/*== 技术标签 ==*/
+.tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-2);
+    margin-top: var(--space-4);
+}
+
+/*== 项目操作 ==*/
+.actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-2);
+    margin-top: var(--space-4);
+}
+
+@media (min-width: 48rem) {
+    .section {
+        padding-right: var(--space-6);
+        padding-left: var(--space-6);
+    }
+
+    .grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+}

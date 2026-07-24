@@ -6,12 +6,14 @@
 
 import { HeroSection } from "@/components/home/hero-section";
 import { ProfileSection } from "@/components/home/profile-section";
+import { ProjectsSection } from "@/components/home/projects-section";
 
 export default function HomePage() {
     return (
         <main>
             <HeroSection />
             <ProfileSection />
+            <ProjectsSection />
         </main>
     );
 }

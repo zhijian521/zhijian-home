@@ -40,7 +40,7 @@
         /*== 表面 ==*/
         --surface-page: var(--color-ink-950);
         --surface-raised: var(--color-paper-950);
-        --surface-muted: var(--color-paper-950);
+        --surface-muted: var(--color-ink-900);
 
         /*== 覆盖层 ==*/
         --overlay-image: color-mix(in srgb, var(--surface-page) var(--alpha-80), transparent);
