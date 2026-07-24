@@ -1,5 +1,11 @@
 /*== 固定尺寸标签 ==*/
 .root {
+    /*== 主题映射 ==*/
+    --tag-default-background: var(--surface-muted);
+    --tag-default-text: var(--text-secondary);
+    --tag-primary-background: var(--action-primary-subtle);
+    --tag-primary-text: var(--action-primary);
+
     display: inline-flex;
     height: 1.75rem;
     align-items: center;
@@ -10,11 +16,11 @@
 }
 
 .default {
-    background: color-mix(in srgb, var(--surface-muted) 98%, var(--text-primary));
-    color: var(--text-secondary);
+    background: var(--tag-default-background);
+    color: var(--tag-default-text);
 }
 
 .primary {
-    background: color-mix(in srgb, var(--action-primary) 12%, transparent);
-    color: var(--action-primary);
+    background: var(--tag-primary-background);
+    color: var(--tag-primary-text);
 }

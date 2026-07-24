@@ -25,7 +25,7 @@
     /*== 主操作 ==*/
     --action-primary: var(--color-cinnabar-600);
     --action-primary-hover: var(--color-cinnabar-700);
-    --action-primary-subtle: color-mix(in srgb, var(--action-primary) var(--alpha-20), transparent);
+    --action-primary-subtle: color-mix(in srgb, var(--action-primary) var(--alpha-15), transparent);
     --action-primary-text: var(--color-paper-50);
 }
 

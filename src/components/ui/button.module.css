@@ -1,27 +1,36 @@
 /*== 固定尺寸文字按钮 ==*/
 .root {
+    /*== 主题映射 ==*/
+    --button-background: transparent;
+    --button-border: var(--border-default);
+    --button-text: var(--text-secondary);
+    --button-hover-background: var(--surface-muted);
+    --button-hover-border: var(--action-primary);
+    --button-hover-text: var(--action-primary);
+    --button-transition:
+        border-color var(--duration-normal) var(--ease-standard),
+        background-color var(--duration-normal) var(--ease-standard),
+        color var(--duration-normal) var(--ease-standard);
+
     display: inline-flex;
     height: 2rem;
     align-items: center;
     gap: var(--space-2);
-    border: var(--border-width-1) solid var(--border-default);
+    border: var(--border-width-1) solid var(--button-border);
     padding: 0 var(--space-3);
-    background: transparent;
-    color: var(--text-secondary);
+    background: var(--button-background);
+    color: var(--button-text);
     font-size: var(--font-size-3);
     font-weight: var(--font-weight-medium);
     line-height: var(--line-height-normal);
     text-decoration: none;
-    transition:
-        border-color var(--duration-normal) var(--ease-standard),
-        background-color var(--duration-normal) var(--ease-standard),
-        color var(--duration-normal) var(--ease-standard);
+    transition: var(--button-transition);
 }
 
 .root:hover {
-    border-color: var(--action-primary);
-    background: var(--surface-muted);
-    color: var(--action-primary);
+    border-color: var(--button-hover-border);
+    background: var(--button-hover-background);
+    color: var(--button-hover-text);
 }
 
 .icon {
