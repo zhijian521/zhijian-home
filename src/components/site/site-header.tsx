@@ -8,28 +8,26 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import { useEffect, useState } from "react";
+import { usePathname } from "next/navigation";
+
+import { IconButton } from "@/components/ui/icon-button";
+import { useScrollThreshold } from "@/hooks/use-scroll-threshold";
 
 import styles from "./site-header.module.css";
 
+/*== 桌面端与移动端共享导航配置，保证入口和当前页状态一致 ==*/
+const NAV_ITEMS = [
+    { href: "/", icon: "home", label: "首页" },
+    { href: "/blog", icon: "list", label: "文章" },
+] as const;
+
 export function SiteHeader() {
-    const [isScrolled, setIsScrolled] = useState(false);
-
-    /*== 根据页面滚动位置切换顶部栏表面状态 ==*/
-    useEffect(() => {
-        const updateScrollState = () => {
-            const nextIsScrolled = window.scrollY > 8;
-
-            setIsScrolled((currentIsScrolled) =>
-                currentIsScrolled === nextIsScrolled ? currentIsScrolled : nextIsScrolled,
-            );
-        };
-
-        updateScrollState();
-        window.addEventListener("scroll", updateScrollState, { passive: true });
-
-        return () => window.removeEventListener("scroll", updateScrollState);
-    }, []);
+    const pathname = usePathname();
+    const isScrolled = useScrollThreshold(8);
+    const navItems = NAV_ITEMS.map((item) => ({
+        ...item,
+        isCurrent: pathname === item.href,
+    }));
 
     return (
         <header className={`${styles.header} ${isScrolled ? styles.scrolled : ""}`}>
@@ -40,10 +38,23 @@ export function SiteHeader() {
                 </Link>
 
                 <nav aria-label="站点主导航" className={styles.nav}>
-                    <Link aria-current="page" className={`${styles.navLink} ${styles.navLinkActive}`} href="/">
-                        首页
-                        <span aria-hidden="true" className={styles.navUnderline} />
-                    </Link>
+                    {navItems.map((item) => (
+                        <Link
+                            aria-current={item.isCurrent ? "page" : undefined}
+                            className={`${styles.navLink} ${item.isCurrent ? styles.navLinkActive : ""}`}
+                            href={item.href}
+                            key={item.href}
+                        >
+                            {item.label}
+                            {item.isCurrent ? <span aria-hidden="true" className={styles.navUnderline} /> : null}
+                        </Link>
+                    ))}
+                </nav>
+
+                <nav aria-label="移动端站点导航" className={styles.mobileNav}>
+                    {navItems.map((item) => (
+                        <IconButton href={item.href} icon={item.icon} isActive={item.isCurrent} key={item.href} label={item.label} />
+                    ))}
                 </nav>
             </div>
         </header>

@@ -1,0 +1,22 @@
+/*== 图标导航按钮 ==*/
+.root {
+    display: inline-flex;
+    width: 2rem;
+    height: 2rem;
+    flex: 0 0 2rem;
+    align-items: center;
+    justify-content: center;
+    border: 0;
+    background: var(--surface-muted);
+    color: var(--text-secondary);
+    text-decoration: none;
+    transition:
+        background-color var(--duration-normal) var(--ease-standard),
+        color var(--duration-normal) var(--ease-standard);
+}
+
+.root:hover,
+.active {
+    background: var(--action-primary-subtle);
+    color: var(--action-primary);
+}

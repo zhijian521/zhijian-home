@@ -15,6 +15,7 @@
     /*== 表面 ==*/
     --surface-page: var(--color-paper-50);
     --surface-raised: var(--color-paper-0);
+    --surface-muted: var(--color-paper-100);
 
     /*== 覆盖层 ==*/
     --overlay-image: color-mix(in srgb, var(--surface-page) var(--alpha-20), transparent);
@@ -26,6 +27,7 @@
     /*== 主操作 ==*/
     --action-primary: var(--color-cinnabar-600);
     --action-primary-hover: var(--color-cinnabar-700);
+    --action-primary-subtle: color-mix(in srgb, var(--action-primary) var(--alpha-20), transparent);
     --action-primary-text: var(--color-paper-50);
 }
 
@@ -40,6 +42,7 @@
         /*== 表面 ==*/
         --surface-page: var(--color-ink-950);
         --surface-raised: var(--color-paper-950);
+        --surface-muted: var(--color-paper-950);
 
         /*== 覆盖层 ==*/
         --overlay-image: color-mix(in srgb, var(--surface-page) var(--alpha-80), transparent);
@@ -51,6 +54,7 @@
         /*== 主操作 ==*/
         --action-primary: var(--color-cinnabar-400);
         --action-primary-hover: var(--color-cinnabar-300);
+        --action-primary-subtle: color-mix(in srgb, var(--action-primary) var(--alpha-20), transparent);
         --action-primary-text: var(--color-ink-950);
     }
 }

@@ -4,12 +4,14 @@
   基于 Lucide 统一管理站点图标，并提供按名称与具名组件两种用法。
 ============================================================================*/
 
-import { ArrowDown, ArrowUpRight, Mail, Rss, type LucideProps } from "lucide-react";
+import { ArrowDown, ArrowUpRight, Home, List, Mail, Rss, type LucideProps } from "lucide-react";
 
 /*== 图标注册表 ==*/
 const ICON_COMPONENTS = {
     "arrow-down": ArrowDown,
     "external-link": ArrowUpRight,
+    home: Home,
+    list: List,
     mail: Mail,
     rss: Rss,
 } as const;
