@@ -42,21 +42,11 @@ export function AboutSection() {
                                 <Icon name="mail" size={16} />
                                 联系我
                             </a>
-                            <a
-                                className={styles.action}
-                                href={ABOUT_CONTENT.links.github}
-                                rel="noreferrer"
-                                target="_blank"
-                            >
+                            <a className={styles.action} href={ABOUT_CONTENT.links.github} rel="noreferrer" target="_blank">
                                 <Icon name="external-link" size={16} />
                                 GitHub
                             </a>
-                            <a
-                                className={styles.action}
-                                href={ABOUT_CONTENT.links.rss}
-                                rel="noreferrer"
-                                target="_blank"
-                            >
+                            <a className={styles.action} href={ABOUT_CONTENT.links.rss} rel="noreferrer" target="_blank">
                                 <Icon name="rss" size={16} />
                                 RSS
                             </a>

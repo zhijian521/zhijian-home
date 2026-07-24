@@ -16,11 +16,7 @@
 }
 
 .scrolled {
-    background: linear-gradient(
-        180deg,
-        color-mix(in srgb, var(--surface-page) var(--alpha-80), transparent) 0%,
-        transparent 100%
-    );
+    background: linear-gradient(180deg, color-mix(in srgb, var(--surface-page) var(--alpha-80), transparent) 0%, transparent 100%);
     backdrop-filter: var(--blur-sm);
 }
 

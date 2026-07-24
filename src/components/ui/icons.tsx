@@ -28,9 +28,7 @@ export interface IconProps extends Omit<LucideProps, "children"> {
 export function Icon({ name, "aria-label": ariaLabel, ...props }: IconProps) {
     const IconComponent = ICON_COMPONENTS[name];
 
-    return (
-        <IconComponent aria-hidden={ariaLabel ? undefined : true} aria-label={ariaLabel} focusable="false" {...props} />
-    );
+    return <IconComponent aria-hidden={ariaLabel ? undefined : true} aria-label={ariaLabel} focusable="false" {...props} />;
 }
 
 /*== 固定图标名称的便捷组件 ==*/
