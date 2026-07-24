@@ -48,9 +48,13 @@
 
     /*== 透明度与色彩混合 ==*/
     --opacity-20: 0.2;
+    --opacity-80: 0.8;
     --opacity-100: 1;
     --alpha-20: 20%;
     --alpha-80: 80%;
+
+    /*== 模糊 ==*/
+    --blur-sm: blur(0.625rem);
 
     /*== 动效 ==*/
     --duration-fast: 120ms;

@@ -25,8 +25,7 @@
     display: inline-block;
     font-size: var(--font-size-6);
     color: var(--action-primary);
-    animation: fade var(--loading-animation-duration) var(--ease-standard)
-        infinite;
+    animation: fade var(--loading-animation-duration) var(--ease-standard) infinite;
 }
 
 .dots span:nth-child(2) {

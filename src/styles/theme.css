@@ -3,14 +3,10 @@
 
     /*== 字体 ==*/
     --font-sans:
-        system-ui, -apple-system, "Segoe UI", "PingFang SC", "Hiragino Sans GB",
-        "Microsoft YaHei", "Noto Sans CJK SC", sans-serif;
-    --font-serif:
-        "Noto Serif SC", "Source Han Serif SC", "Songti SC", "STSong", Georgia,
-        serif;
-    --font-mono:
-        "SFMono-Regular", "Cascadia Code", Consolas, "Liberation Mono",
-        monospace;
+        system-ui, -apple-system, "Segoe UI", "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", "Noto Sans CJK SC",
+        sans-serif;
+    --font-serif: "Noto Serif SC", "Source Han Serif SC", "Songti SC", "STSong", Georgia, serif;
+    --font-mono: "SFMono-Regular", "Cascadia Code", Consolas, "Liberation Mono", monospace;
 
     /*== 文本 ==*/
     --text-primary: var(--color-ink-900);
@@ -21,18 +17,10 @@
     --surface-raised: var(--color-paper-0);
 
     /*== 覆盖层 ==*/
-    --overlay-image: color-mix(
-        in srgb,
-        var(--surface-page) var(--alpha-20),
-        transparent
-    );
+    --overlay-image: color-mix(in srgb, var(--surface-page) var(--alpha-20), transparent);
 
     /*== 边框 ==*/
-    --border-default: color-mix(
-        in srgb,
-        var(--color-ink-700) var(--alpha-20),
-        transparent
-    );
+    --border-default: color-mix(in srgb, var(--color-ink-700) var(--alpha-20), transparent);
     --border-focus: var(--color-cinnabar-600);
 
     /*== 主操作 ==*/
@@ -54,18 +42,10 @@
         --surface-raised: var(--color-paper-950);
 
         /*== 覆盖层 ==*/
-        --overlay-image: color-mix(
-            in srgb,
-            var(--surface-page) var(--alpha-80),
-            transparent
-        );
+        --overlay-image: color-mix(in srgb, var(--surface-page) var(--alpha-80), transparent);
 
         /*== 边框 ==*/
-        --border-default: color-mix(
-            in srgb,
-            var(--color-paper-200) var(--alpha-20),
-            transparent
-        );
+        --border-default: color-mix(in srgb, var(--color-paper-200) var(--alpha-20), transparent);
         --border-focus: var(--color-cinnabar-400);
 
         /*== 主操作 ==*/
