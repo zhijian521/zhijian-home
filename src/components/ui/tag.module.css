@@ -8,9 +8,8 @@
     line-height: var(--line-height-normal);
     white-space: nowrap;
 }
-
 .default {
-    background: var(--surface-muted);
+    background: var(--surface-emphasized);
     color: var(--text-secondary);
 }
 

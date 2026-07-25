@@ -50,8 +50,8 @@
     --opacity-20: 0.2;
     --opacity-80: 0.8;
     --opacity-100: 1;
+    --alpha-10: 10%;
     --alpha-20: 20%;
-    --alpha-15: 15%;
     --alpha-80: 80%;
 
     /*== 模糊 ==*/
@@ -74,6 +74,7 @@
     --color-paper-0: #fffefa;
     --color-paper-50: #fdfbf6;
     --color-paper-100: #f9f4ea;
+    --color-paper-150: #f5ede1;
     --color-paper-200: #f0e6d7;
     --color-paper-300: #dfcfbb;
     --color-paper-950: #1d1612;
