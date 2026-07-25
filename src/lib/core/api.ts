@@ -8,7 +8,7 @@ import "server-only";
 
 import { NextResponse } from "next/server";
 
-import { isServiceUnavailableError } from "@/lib/core/errors";
+import { getErrorLogContext, isServiceUnavailableError } from "@/lib/core/errors";
 
 export async function withApiErrorHandling(handler: () => Promise<NextResponse>): Promise<NextResponse> {
     try {
@@ -18,9 +18,7 @@ export async function withApiErrorHandling(handler: () => Promise<NextResponse>)
         const code = status === 503 ? "SERVICE_UNAVAILABLE" : "INTERNAL_SERVER_ERROR";
 
         /*== 对外使用泛化错误；日志仅保留类型，避免记录数据库连接等敏感细节 ==*/
-        console.error("API 请求失败：", {
-            name: error instanceof Error ? error.name : "UnknownError",
-        });
+        console.error("API 请求失败：", getErrorLogContext(error));
 
         return NextResponse.json(
             {

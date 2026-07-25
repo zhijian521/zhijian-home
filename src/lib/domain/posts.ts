@@ -38,8 +38,10 @@ async function queryLatestPosts(): Promise<LatestPost[]> {
         throw new ServiceUnavailableError();
     }
 
+    let rows: LatestPostRow[];
+
     try {
-        const [rows] = await db.execute<LatestPostRow[]>(
+        [rows] = await db.execute<LatestPostRow[]>(
             `
                 SELECT
                     p.slug,
@@ -53,25 +55,25 @@ async function queryLatestPosts(): Promise<LatestPost[]> {
                 FROM zhijian_blog_posts p
                 LEFT JOIN zhijian_blog_categories c ON p.category_id = c.id
                 WHERE p.status = ?
-                ORDER BY p.updated_at IS NULL, p.updated_at DESC, p.published_at IS NULL, p.published_at DESC, p.id DESC
+                ORDER BY p.updated_at DESC, p.published_at DESC, p.id DESC
                 LIMIT ?
             `,
             ["published", LATEST_POST_LIMIT]
         );
-
-        return rows.map((row) => ({
-            slug: row.slug,
-            title: row.title,
-            summary: row.summary,
-            categoryName: row.category_name,
-            publishedAt: row.published_at,
-            updatedAt: row.updated_at,
-            coverImage: getSafeCoverImage(row.cover_image),
-            altText: row.alt_text,
-        }));
-    } catch {
-        throw new ServiceUnavailableError();
+    } catch (error) {
+        throw new ServiceUnavailableError(error);
     }
+
+    return rows.map((row) => ({
+        slug: row.slug,
+        title: row.title,
+        summary: row.summary,
+        categoryName: row.category_name,
+        publishedAt: row.published_at,
+        updatedAt: row.updated_at,
+        coverImage: getSafeCoverImage(row.cover_image),
+        altText: row.alt_text,
+    }));
 }
 
 /*== 统一缓存入口，避免首页与 API 分别绕过服务端缓存 ==*/

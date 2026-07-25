@@ -8,12 +8,12 @@ import { HeroSection } from "@/components/home/hero-section";
 import { PostsSection } from "@/components/home/posts-section";
 import { ProfileSection } from "@/components/home/profile-section";
 import { ProjectsSection } from "@/components/home/projects-section";
-import { isServiceUnavailableError } from "@/lib/core/errors";
+import { getErrorLogContext, isServiceUnavailableError } from "@/lib/core/errors";
 import { getLatestPosts } from "@/lib/domain/posts";
 import type { LatestPost } from "@/types/post";
 
-/*== 首页按请求渲染，文章数据由服务端读取 ==*/
-export const dynamic = "force-dynamic";
+/*== 静态首页每 60 秒增量更新，避免公开请求直接触发数据库查询 ==*/
+export const revalidate = 60;
 
 export default async function HomePage() {
     const posts = await getLatestPostsForHome();
@@ -34,7 +34,7 @@ async function getLatestPostsForHome(): Promise<LatestPost[]> {
         return await getLatestPosts();
     } catch (error) {
         if (isServiceUnavailableError(error)) {
-            console.error("首页最新文章不可用：", { name: error.name });
+            console.error("首页最新文章不可用：", getErrorLogContext(error));
             return [];
         }
 
