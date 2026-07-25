@@ -1,14 +1,5 @@
 /*== 图标导航按钮 ==*/
 .root {
-    /*== 主题映射 ==*/
-    --icon-button-background: var(--surface-muted);
-    --icon-button-text: var(--text-secondary);
-    --icon-button-active-background: var(--action-primary-subtle);
-    --icon-button-active-text: var(--action-primary);
-    --icon-button-transition:
-        background-color var(--duration-normal) var(--ease-standard),
-        color var(--duration-normal) var(--ease-standard);
-
     display: inline-flex;
     width: 2rem;
     height: 2rem;
@@ -16,14 +7,16 @@
     align-items: center;
     justify-content: center;
     border: 0;
-    background: var(--icon-button-background);
-    color: var(--icon-button-text);
+    background: var(--surface-muted);
+    color: var(--text-secondary);
     text-decoration: none;
-    transition: var(--icon-button-transition);
+    transition:
+        background-color var(--duration-normal) var(--ease-standard),
+        color var(--duration-normal) var(--ease-standard);
 }
 
 .root:hover,
 .active {
-    background: var(--icon-button-active-background);
-    color: var(--icon-button-active-text);
+    background: var(--action-primary-subtle);
+    color: var(--action-primary);
 }

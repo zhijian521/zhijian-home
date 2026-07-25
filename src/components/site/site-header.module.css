@@ -6,7 +6,7 @@
 
 .header {
     position: fixed;
-    z-index: var(--z-overlay);
+    z-index: var(--z-header);
     inset: 0 0 auto;
     width: 100%;
     background: transparent;
@@ -17,7 +17,7 @@
 
 .scrolled {
     background: linear-gradient(180deg, color-mix(in srgb, var(--surface-page) var(--alpha-80), transparent) 0%, transparent 100%);
-    backdrop-filter: var(--blur-sm);
+    backdrop-filter: blur(var(--blur-radius-sm));
 }
 
 .container {
