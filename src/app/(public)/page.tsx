@@ -5,15 +5,39 @@
 ============================================================================*/
 
 import { HeroSection } from "@/components/home/hero-section";
+import { PostsSection } from "@/components/home/posts-section";
 import { ProfileSection } from "@/components/home/profile-section";
 import { ProjectsSection } from "@/components/home/projects-section";
+import { isServiceUnavailableError } from "@/lib/core/errors";
+import { getLatestPosts } from "@/lib/domain/posts";
+import type { LatestPost } from "@/types/post";
 
-export default function HomePage() {
+/*== 首页按请求渲染，文章数据由服务端读取 ==*/
+export const dynamic = "force-dynamic";
+
+export default async function HomePage() {
+    const posts = await getLatestPostsForHome();
+
     return (
         <main>
             <HeroSection />
             <ProfileSection />
+            <PostsSection posts={posts} />
             <ProjectsSection />
         </main>
     );
+}
+
+/*== 仅降级可预期的依赖异常；其余错误继续暴露给监控 ==*/
+async function getLatestPostsForHome(): Promise<LatestPost[]> {
+    try {
+        return await getLatestPosts();
+    } catch (error) {
+        if (isServiceUnavailableError(error)) {
+            console.error("首页最新文章不可用：", { name: error.name });
+            return [];
+        }
+
+        throw error;
+    }
 }
