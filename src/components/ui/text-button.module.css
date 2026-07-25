@@ -1,0 +1,38 @@
+.root {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-1);
+    color: var(--action-primary);
+    font-size: var(--font-size-3);
+    font-weight: var(--font-weight-medium);
+    line-height: var(--line-height-normal);
+    text-decoration: none;
+    transition: color var(--duration-normal) var(--ease-standard);
+}
+
+a.root:hover {
+    color: var(--action-primary-hover);
+}
+
+.icon {
+    width: 1em;
+    height: 1em;
+    flex: 0 0 1em;
+}
+
+a.root:hover .icon {
+    animation: text-button-icon-nudge var(--duration-slower) var(--ease-standard);
+}
+
+@keyframes text-button-icon-nudge {
+    50% {
+        transform: translateX(var(--space-1));
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    /*== 尊重系统减少动态偏好 ==*/
+    a.root:hover .icon {
+        animation: none;
+    }
+}
