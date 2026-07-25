@@ -1,0 +1,38 @@
+/*== 首页最新文章区 ==*/
+.section {
+    padding: var(--space-16) var(--space-4);
+    background: var(--surface-page);
+}
+
+.container {
+    width: 100%;
+    max-width: 80rem;
+    margin: 0 auto;
+}
+
+/*== 文章网格 ==*/
+.grid {
+    display: grid;
+    gap: var(--space-4);
+}
+
+/*== 空状态 ==*/
+.empty {
+    padding: var(--space-6);
+    border: var(--border-width-1) solid var(--border-default);
+    color: var(--text-secondary);
+    font-size: var(--font-size-3);
+    line-height: var(--line-height-relaxed);
+    text-align: center;
+}
+
+@media (min-width: 48rem) {
+    .section {
+        padding-right: var(--space-6);
+        padding-left: var(--space-6);
+    }
+
+    .grid {
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+}
