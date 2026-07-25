@@ -4,11 +4,12 @@
   基于 Lucide 统一管理站点图标，并提供按名称与具名组件两种用法。
 ============================================================================*/
 
-import { ArrowDown, ArrowUpRight, BookOpen, Code2, GitBranch, Home, List, Mail, Rss, type LucideProps } from "lucide-react";
+import { ArrowDown, ArrowRight, ArrowUpRight, BookOpen, Code2, GitBranch, Home, List, Mail, Rss, type LucideProps } from "lucide-react";
 
 /*== 图标注册表 ==*/
 const ICON_COMPONENTS = {
     "arrow-down": ArrowDown,
+    "arrow-right": ArrowRight,
     "book-open": BookOpen,
     code: Code2,
     "external-link": ArrowUpRight,

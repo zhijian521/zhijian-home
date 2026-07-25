@@ -1,0 +1,92 @@
+/*== 最新文章卡片 ==*/
+.card {
+    display: flex;
+    min-width: 0;
+    min-height: 100%;
+    border: var(--border-width-1) solid var(--action-primary);
+    background: var(--surface-raised);
+}
+
+.link {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    min-width: 0;
+    color: inherit;
+    text-decoration: none;
+}
+
+/*== 封面 ==*/
+.visualImage {
+    overflow: hidden;
+    aspect-ratio: 16 / 9;
+    margin: var(--space-4) var(--space-4) 0;
+    background: var(--surface-emphasized);
+}
+
+.visualImage img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+/*== 内容 ==*/
+.body {
+    display: flex;
+    flex: 1;
+    flex-direction: column;
+    padding: var(--space-4);
+}
+
+.title {
+    display: -webkit-box;
+    overflow: hidden;
+    font-family: var(--font-serif);
+    font-size: var(--font-size-6);
+    font-weight: var(--font-weight-semibold);
+    line-height: var(--line-height-normal);
+    overflow-wrap: anywhere;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 2;
+}
+
+.meta {
+    display: flex;
+    min-height: 1.75rem;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--space-3);
+    margin-top: var(--space-3);
+}
+
+.date {
+    min-width: 0;
+    margin-left: auto;
+    color: var(--text-secondary);
+    font-size: var(--font-size-2);
+    line-height: var(--line-height-normal);
+    text-align: right;
+}
+
+.category {
+    max-width: 60%;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.summary {
+    display: -webkit-box;
+    overflow: hidden;
+    margin-top: var(--space-3);
+    color: var(--text-secondary);
+    font-size: var(--font-size-3);
+    line-height: var(--line-height-relaxed);
+    overflow-wrap: anywhere;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 3;
+}
+
+.readMore {
+    margin-top: auto;
+    padding-top: var(--space-3);
+}
