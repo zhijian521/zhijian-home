@@ -1,0 +1,12 @@
+/*== 公开站点壳层 ==*/
+.root {
+    display: flex;
+    min-height: 100dvh;
+    flex-direction: column;
+    background: var(--surface-page);
+    color: var(--text-primary);
+}
+
+.main {
+    flex: 1;
+}

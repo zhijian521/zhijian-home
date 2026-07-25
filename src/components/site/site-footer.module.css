@@ -1,0 +1,19 @@
+/*== 公开站点页脚 ==*/
+.footer {
+    padding: var(--space-6) var(--space-4);
+    background: var(--surface-page);
+    text-align: center;
+}
+
+.copy {
+    color: var(--text-secondary);
+    font-size: var(--font-size-1);
+    opacity: var(--opacity-80);
+}
+
+@media (min-width: 48rem) {
+    .footer {
+        padding-right: var(--space-6);
+        padding-left: var(--space-6);
+    }
+}
