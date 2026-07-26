@@ -9,29 +9,29 @@ import "server-only";
 import { NextResponse } from "next/server";
 
 import { getErrorLogContext, isServiceUnavailableError } from "@/lib/core/errors";
+import type { ApiResponse } from "@/types/api";
 
-interface ApiSuccessBody<T> {
-    data: T;
-}
-
-interface ApiErrorBody {
-    error: {
-        code: string;
-        message: string;
-    };
-}
+const API_SUCCESS_CODE = "SUCCESS";
+const API_SUCCESS_MESSAGE = "请求成功。";
 
 type ApiErrorOptions = Omit<ResponseInit, "status"> & {
     status: number;
 };
 
 /*== 成功响应保持统一的 data 包装 ==*/
-export function jsonSuccess<T>(data: T, init?: ResponseInit): NextResponse<ApiSuccessBody<T>> {
-    return NextResponse.json({ data }, init);
+export function jsonSuccess<TData>(data: TData, init?: ResponseInit): NextResponse<ApiResponse<TData>> {
+    return NextResponse.json(
+        {
+            code: API_SUCCESS_CODE,
+            message: API_SUCCESS_MESSAGE,
+            data,
+        },
+        init
+    );
 }
 
-/*== 错误响应默认禁止缓存，调用方仍可显式覆盖 ==*/
-export function jsonError(code: string, message: string, options: ApiErrorOptions): NextResponse<ApiErrorBody> {
+/*== 错误响应同样保留 code、message、data 字段，默认禁止缓存 ==*/
+export function jsonError(code: string, message: string, options: ApiErrorOptions): NextResponse<ApiResponse<null>> {
     const headers = new Headers(options.headers);
 
     if (!headers.has("Cache-Control")) {
@@ -40,10 +40,9 @@ export function jsonError(code: string, message: string, options: ApiErrorOption
 
     return NextResponse.json(
         {
-            error: {
-                code,
-                message,
-            },
+            code,
+            message,
+            data: null,
         },
         {
             ...options,
