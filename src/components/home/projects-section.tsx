@@ -1,7 +1,7 @@
 /*============================================================================
   projects-section - 首页开源项目区
 
-  展示已确认的静态开源项目；文章与 GitHub 动态数据继续由后续单元处理。
+  展示已确认的静态开源项目及其外部访问入口。
 ============================================================================*/
 
 import { SectionHeading } from "@/components/site/section-heading";
@@ -28,7 +28,7 @@ export function ProjectsSection() {
 
                             <p className={styles.description}>{project.description}</p>
 
-                            <div aria-label={`${project.title} 使用的技术`} className={styles.tags}>
+                            <div className={styles.tags}>
                                 {project.tags.map((tag) => (
                                     <Tag key={tag}>{tag}</Tag>
                                 ))}
