@@ -11,12 +11,12 @@ import Link from "next/link";
 import { Tag } from "@/components/ui/tag";
 import { TextButton } from "@/components/ui/text-button";
 import { formatPostDate } from "@/lib/core/date";
-import type { LatestPost } from "@/types/post";
+import type { PostPreview } from "@/types/post";
 
 import styles from "./post-card.module.css";
 
 interface PostCardProps {
-    post: LatestPost;
+    post: PostPreview;
 }
 
 export function PostCard({ post }: PostCardProps) {

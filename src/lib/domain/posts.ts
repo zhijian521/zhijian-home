@@ -11,14 +11,14 @@ import type { RowDataPacket } from "mysql2";
 
 import { getDb } from "@/lib/core/db";
 import { ServiceUnavailableError } from "@/lib/core/errors";
-import type { LatestPost } from "@/types/post";
+import type { PostPreview } from "@/types/post";
 
 /*== 首页与 API 共用的缓存时长 ==*/
 const LATEST_POST_LIMIT = 3;
 export const LATEST_POSTS_CACHE_SECONDS = 60;
 export const LATEST_POSTS_STALE_SECONDS = 300;
 
-interface LatestPostRow extends RowDataPacket {
+interface PostPreviewRow extends RowDataPacket {
     slug: string;
     title: string;
     summary: string | null;
@@ -30,7 +30,7 @@ interface LatestPostRow extends RowDataPacket {
 }
 
 /*== 仅查询已发布文章，排序优先使用最近更新时间，再回退发布时间 ==*/
-async function queryLatestPosts(): Promise<LatestPost[]> {
+async function queryLatestPosts(): Promise<PostPreview[]> {
     const db = getDb();
 
     if (!db) {
@@ -38,10 +38,10 @@ async function queryLatestPosts(): Promise<LatestPost[]> {
         throw new ServiceUnavailableError();
     }
 
-    let rows: LatestPostRow[];
+    let rows: PostPreviewRow[];
 
     try {
-        [rows] = await db.execute<LatestPostRow[]>(
+        [rows] = await db.execute<PostPreviewRow[]>(
             `
                 SELECT
                     p.slug,

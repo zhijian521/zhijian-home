@@ -7,12 +7,12 @@
 import { PostCard } from "@/components/home/post-card";
 import { SectionHeading } from "@/components/site/section-heading";
 import { TextButton } from "@/components/ui/text-button";
-import type { LatestPost } from "@/types/post";
+import type { PostPreview } from "@/types/post";
 
 import styles from "./posts-section.module.css";
 
 interface PostsSectionProps {
-    posts: LatestPost[];
+    posts: PostPreview[];
 }
 
 export function PostsSection({ posts }: PostsSectionProps) {
