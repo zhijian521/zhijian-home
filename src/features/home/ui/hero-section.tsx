@@ -15,11 +15,9 @@ import styles from "./hero-section.module.css";
 export function HeroSection() {
     return (
         <section aria-labelledby="hero-title" className={styles.hero}>
-            {/* 首屏背景与蒙版 */}
             <Image alt="" className={styles.heroBg} fill priority sizes="100vw" src="/images/bg-landscape.webp" />
             <div aria-hidden="true" className={styles.overlay} />
 
-            {/* 首屏标题与简介 */}
             <div className={styles.content}>
                 <h1 className={styles.title} id="hero-title">
                     {HERO_CONTENT.author}

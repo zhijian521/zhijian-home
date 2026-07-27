@@ -5,6 +5,7 @@
 ============================================================================*/
 
 import clsx from "clsx";
+import Link from "next/link";
 import type { AnchorHTMLAttributes, ReactNode } from "react";
 
 import { Icon, type IconName } from "@/components/ui/icons";
@@ -27,6 +28,14 @@ export function TextButton({ children, className, href, icon, ...props }: TextBu
     );
 
     if (href) {
+        if (href.startsWith("/") && !href.startsWith("//")) {
+            return (
+                <Link className={rootClassName} href={href} {...props}>
+                    {content}
+                </Link>
+            );
+        }
+
         return (
             <a className={rootClassName} href={href} {...props}>
                 {content}

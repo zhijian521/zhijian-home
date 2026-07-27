@@ -75,7 +75,6 @@ export default async function BlogPage({ searchParams }: BlogPageProps) {
                 </header>
 
                 <div className={styles.layout}>
-                    {/* 筛选组件 */}
                     <BlogFilters
                         activeFilters={activeFilters}
                         categories={categories}
@@ -83,7 +82,6 @@ export default async function BlogPage({ searchParams }: BlogPageProps) {
                         tags={tags}
                     />
 
-                    {/* 列表分页 */}
                     <div className={styles.content}>
                         {pageData.posts.length > 0 ? (
                             <PostList posts={pageData.posts} />
@@ -113,7 +111,6 @@ export default async function BlogPage({ searchParams }: BlogPageProps) {
     );
 }
 
-/*== 加载错误页 ==*/
 function BlogUnavailable() {
     return (
         <main className={styles.page}>
@@ -130,7 +127,6 @@ function BlogUnavailable() {
     );
 }
 
-/*== 解析URL参数 ==*/
 function getBlogQuery(searchParams: BlogSearchParams): NormalizedPublishedPostsPageQuery {
     const page = getSearchParam(searchParams.page);
     const tags = getSearchParam(searchParams.tags);
