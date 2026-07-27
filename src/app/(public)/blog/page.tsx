@@ -61,6 +61,7 @@ export default async function BlogPage({ searchParams }: BlogPageProps) {
         );
     }
 
+    /*== 当前筛选分页状态 ==*/
     const currentPage = pageData.totalPages > 0 ? pageData.page : 1;
     const { categories, tags } = buildBlogFilterOptions(filters, filterOptions);
     const activeFilters = buildBlogActiveFilters(filters);

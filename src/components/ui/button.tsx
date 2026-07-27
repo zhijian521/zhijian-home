@@ -64,7 +64,7 @@ export function Button(props: ButtonProps) {
             ...buttonProps
         } = props;
 
-        // 原生操作保留 disabled 与 type 的浏览器语义。
+        /*== 原生操作保留 disabled 与 type 的浏览器语义 ==*/
         return (
             <button {...buttonProps} className={rootClassName} disabled={isDisabled} type={type ?? "button"}>
                 {content}
@@ -75,7 +75,7 @@ export function Button(props: ButtonProps) {
     const { href } = props;
 
     if (isDisabled || !href) {
-        // 不渲染空链接，避免无效目标进入键盘焦点。
+        /*== 不渲染空链接，避免无效目标进入键盘焦点 ==*/
         return (
             <span aria-disabled="true" className={rootClassName}>
                 {content}

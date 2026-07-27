@@ -40,7 +40,7 @@ export function IconButton(props: IconButtonProps) {
     const rootClassName = clsx(styles.root, isActive && styles.active, className);
 
     if (props.asButton) {
-        // 原生按钮用于触发本地操作，保留键盘交互语义。
+        /*== 原生按钮用于触发本地操作，保留键盘交互语义 ==*/
         return (
             <button aria-label={label} className={rootClassName} onClick={props.onClick} title={label} type="button">
                 <Icon name={icon} size="1rem" />
