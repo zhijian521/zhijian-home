@@ -11,7 +11,7 @@ import type { Metadata } from "next";
 import { ABOUT_CONTENT, HERO_CONTENT } from "@/config/home";
 
 const DEFAULT_SITE_URL = "https://yuwb.dev";
-const OG_IMAGE = "/images/og-default.webp";
+export const DEFAULT_OG_IMAGE = "/images/og-default.webp";
 
 export const SITE_METADATA = {
     name: "知简",
@@ -73,11 +73,11 @@ export const ROOT_METADATA = {
         type: "website",
         locale: SITE_METADATA.locale,
         siteName: SITE_METADATA.name,
-        images: [{ url: OG_IMAGE, alt: SITE_METADATA.brandTitle }],
+        images: [{ url: DEFAULT_OG_IMAGE, alt: SITE_METADATA.brandTitle }],
     },
     twitter: {
         card: "summary_large_image",
-        images: [OG_IMAGE],
+        images: [DEFAULT_OG_IMAGE],
     },
     robots: {
         index: true,
@@ -98,13 +98,13 @@ export const HOME_METADATA = {
         title: SITE_METADATA.brandTitle,
         description: SITE_METADATA.description,
         url: "/",
-        images: [{ url: OG_IMAGE, alt: SITE_METADATA.brandTitle }],
+        images: [{ url: DEFAULT_OG_IMAGE, alt: SITE_METADATA.brandTitle }],
     },
     twitter: {
         card: "summary_large_image",
         title: SITE_METADATA.brandTitle,
         description: SITE_METADATA.description,
-        images: [OG_IMAGE],
+        images: [DEFAULT_OG_IMAGE],
     },
 } satisfies Metadata;
 
