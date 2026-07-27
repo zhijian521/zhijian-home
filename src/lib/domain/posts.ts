@@ -79,7 +79,7 @@ async function queryLatestPosts(): Promise<PostPreview[]> {
                 ORDER BY p.updated_at DESC, p.published_at DESC, p.id DESC
                 LIMIT ?
             `,
-            ["published", LATEST_POST_LIMIT]
+            ["published", LATEST_POST_LIMIT],
         );
     } catch (error) {
         throw new ServiceUnavailableError(error);
@@ -94,7 +94,7 @@ export const getLatestPosts = unstable_cache(queryLatestPosts, ["latest-posts"],
     tags: ["latest-posts"],
 });
 
-/** 读取文章筛选项；数据库不可用时抛出 ServiceUnavailableError。 */
+/*== 读取文章筛选项；数据库不可用时抛出 ServiceUnavailableError。==*/
 export async function getPublishedPostFilters(): Promise<PublishedPostFilters> {
     return getCachedPublishedPostFilters();
 }
@@ -119,14 +119,14 @@ async function queryPublishedPostFilters(): Promise<PublishedPostFilters> {
                     SELECT c.name, c.slug
                     FROM zhijian_blog_categories c
                     ORDER BY c.sort_order ASC, c.id ASC
-                `
+                `,
             ),
             db.execute<PostFilterOptionRow[]>(
                 `
                     SELECT t.name, t.slug
                     FROM zhijian_blog_tags t
                     ORDER BY t.id ASC
-                `
+                `,
             ),
         ]);
 
@@ -139,7 +139,7 @@ async function queryPublishedPostFilters(): Promise<PublishedPostFilters> {
     }
 }
 
-/** 读取一页已发布文章的最小展示数据；数据库不可用时抛出 ServiceUnavailableError。 */
+/*== 读取一页已发布文章的最小展示数据；数据库不可用时抛出 ServiceUnavailableError。 ==*/
 export async function getPublishedPostsPage(query: PublishedPostsPageQuery = {}): Promise<PublishedPostsPage> {
     const { categorySlug, page, pageSize, tagSlugs } = normalizePublishedPostsPageQuery(query);
 
@@ -153,12 +153,7 @@ const getCachedPublishedPostsPage = unstable_cache(queryPublishedPostsPage, ["pu
 });
 
 /*== 列表与总数并行读取，避免博客列表页产生数据库查询瀑布 ==*/
-async function queryPublishedPostsPage(
-    page: number,
-    pageSize: number,
-    categorySlug: string,
-    tagSlugsValue: string
-): Promise<PublishedPostsPage> {
+async function queryPublishedPostsPage(page: number, pageSize: number, categorySlug: string, tagSlugsValue: string): Promise<PublishedPostsPage> {
     const db = getDb();
 
     if (!db) {
@@ -179,7 +174,7 @@ async function queryPublishedPostsPage(
                     LEFT JOIN zhijian_blog_categories c ON p.category_id = c.id
                     ${whereClause}
                 `,
-                ["published", ...values]
+                ["published", ...values],
             ),
             db.execute<PostPreviewRow[]>(
                 `
@@ -198,7 +193,7 @@ async function queryPublishedPostsPage(
                 ORDER BY p.updated_at DESC, p.published_at DESC, p.id DESC
                 LIMIT ? OFFSET ?
             `,
-                ["published", ...values, pageSize, offset]
+                ["published", ...values, pageSize, offset],
             ),
         ]);
         const total = Number(countRows[0]?.total ?? 0);
@@ -215,10 +210,8 @@ async function queryPublishedPostsPage(
     }
 }
 
-/** 规范化公开文章列表查询，限制页码、页大小与标签筛选数量。 */
-export function normalizePublishedPostsPageQuery(
-    query: PublishedPostsPageQuery = {}
-): NormalizedPublishedPostsPageQuery {
+/*== 规范化公开文章列表查询，限制页码、页大小与标签筛选数量。 ==*/
+export function normalizePublishedPostsPageQuery(query: PublishedPostsPageQuery = {}): NormalizedPublishedPostsPageQuery {
     return {
         categorySlug: normalizeSlug(query.categorySlug),
         page: normalizePositiveInteger(query.page, 1, MAX_POSTS_PAGE),
