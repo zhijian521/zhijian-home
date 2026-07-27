@@ -6,6 +6,7 @@
 
 "use client";
 
+import clsx from "clsx";
 import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
@@ -30,7 +31,7 @@ export function SiteHeader() {
     }));
 
     return (
-        <header className={`${styles.header} ${isScrolled ? styles.scrolled : ""}`}>
+        <header className={clsx(styles.header, isScrolled && styles.scrolled)}>
             <div className={styles.container}>
                 <Link aria-label="返回 Zhijian 首页" className={styles.brand} href="/">
                     <Image alt="" className={styles.logo} height={32} src="/images/logo.webp" width={32} />
@@ -41,7 +42,7 @@ export function SiteHeader() {
                     {navItems.map((item) => (
                         <Link
                             aria-current={item.isCurrent ? "page" : undefined}
-                            className={`${styles.navLink} ${item.isCurrent ? styles.navLinkActive : ""}`}
+                            className={clsx(styles.navLink, item.isCurrent && styles.navLinkActive)}
                             href={item.href}
                             key={item.href}
                         >

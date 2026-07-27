@@ -1,0 +1,27 @@
+/*== 固定页码分页 ==*/
+.root {
+    --pagination-text: var(--text-secondary);
+
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: flex-end;
+    gap: var(--space-1);
+    margin-top: var(--space-8);
+}
+
+.ellipsis {
+    display: inline-flex;
+    width: 2rem;
+    height: 2rem;
+    align-items: center;
+    justify-content: center;
+    color: var(--pagination-text);
+    font-size: var(--font-size-3);
+    user-select: none;
+}
+
+.page {
+    min-width: 2rem;
+    padding: 0 var(--space-1);
+}

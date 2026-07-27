@@ -4,6 +4,7 @@
   有 href 时输出链接；卡片内可作为外层链接的装饰性操作提示使用。
 ============================================================================*/
 
+import clsx from "clsx";
 import type { AnchorHTMLAttributes, ReactNode } from "react";
 
 import { Icon, type IconName } from "@/components/ui/icons";
@@ -17,7 +18,7 @@ interface TextButtonProps extends Omit<AnchorHTMLAttributes<HTMLAnchorElement>, 
 }
 
 export function TextButton({ children, className, href, icon, ...props }: TextButtonProps) {
-    const rootClassName = `${styles.root}${className ? ` ${className}` : ""}`;
+    const rootClassName = clsx(styles.root, className);
     const content = (
         <>
             {children}
