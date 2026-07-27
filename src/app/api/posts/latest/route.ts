@@ -7,7 +7,7 @@
 import { jsonError, jsonSuccess, withApiErrorHandling } from "@/lib/core/api";
 import { checkRateLimit, PUBLIC_API_RATE_LIMIT } from "@/lib/core/rate-limit";
 import { getClientIp } from "@/lib/core/request-ip";
-import { getLatestPosts, LATEST_POSTS_CACHE_SECONDS, LATEST_POSTS_STALE_SECONDS } from "@/lib/domain/posts";
+import { getLatestPosts, PUBLISHED_POSTS_CACHE_SECONDS, PUBLISHED_POSTS_STALE_SECONDS } from "@/lib/domain/posts";
 
 export const dynamic = "force-dynamic";
 /*== MySQL 驱动依赖 Node.js 运行时 ==*/
@@ -32,7 +32,7 @@ export async function GET(request: Request) {
 
         return jsonSuccess(data, {
             headers: {
-                "Cache-Control": `public, s-maxage=${LATEST_POSTS_CACHE_SECONDS}, stale-while-revalidate=${LATEST_POSTS_STALE_SECONDS}`,
+                "Cache-Control": `public, s-maxage=${PUBLISHED_POSTS_CACHE_SECONDS}, stale-while-revalidate=${PUBLISHED_POSTS_STALE_SECONDS}`,
             },
         });
     });

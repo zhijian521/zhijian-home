@@ -14,3 +14,35 @@ export interface PostPreview {
     coverImage: string | null;
     altText: string | null;
 }
+
+export interface PostFilterOption {
+    name: string;
+    slug: string;
+}
+
+export interface PublishedPostFilters {
+    categories: PostFilterOption[];
+    tags: PostFilterOption[];
+}
+
+export interface PublishedPostsPageQuery {
+    categorySlug?: string;
+    page?: number;
+    pageSize?: number;
+    tagSlugs?: string[];
+}
+
+export interface NormalizedPublishedPostsPageQuery {
+    categorySlug?: string;
+    page: number;
+    pageSize: number;
+    tagSlugs: string[];
+}
+
+export interface PublishedPostsPage {
+    posts: PostPreview[];
+    page: number;
+    pageSize: number;
+    total: number;
+    totalPages: number;
+}
