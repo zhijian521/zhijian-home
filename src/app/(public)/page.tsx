@@ -6,14 +6,12 @@
 
 import type { Metadata } from "next";
 
-import { HeroSection } from "@/components/home/hero-section";
-import { PostsSection } from "@/components/home/posts-section";
-import { ProfileSection } from "@/components/home/profile-section";
-import { ProjectsSection } from "@/components/home/projects-section";
-import { HOME_JSON_LD, HOME_METADATA } from "@/config/metadata";
-import { getErrorLogContext, isServiceUnavailableError } from "@/lib/core/errors";
-import { getLatestPosts } from "@/lib/domain/posts";
-import type { PostPreview } from "@/types/post";
+import { HOME_JSON_LD, HOME_METADATA } from "@/features/home/lib/metadata";
+import { getHomePageData } from "@/features/home/lib/page-data";
+import { HeroSection } from "@/features/home/ui/hero-section";
+import { PostsSection } from "@/features/home/ui/posts-section";
+import { ProfileSection } from "@/features/home/ui/profile-section";
+import { ProjectsSection } from "@/features/home/ui/projects-section";
 
 export const metadata: Metadata = HOME_METADATA;
 
@@ -21,7 +19,7 @@ export const metadata: Metadata = HOME_METADATA;
 export const revalidate = 60;
 
 export default async function HomePage() {
-    const posts = await getLatestPostsForHome();
+    const { posts } = await getHomePageData();
 
     return (
         <main>
@@ -33,18 +31,4 @@ export default async function HomePage() {
             <ProjectsSection />
         </main>
     );
-}
-
-/*== 仅降级可预期的依赖异常；其余错误继续暴露给监控 ==*/
-async function getLatestPostsForHome(): Promise<PostPreview[]> {
-    try {
-        return await getLatestPosts();
-    } catch (error) {
-        if (isServiceUnavailableError(error)) {
-            console.error("首页最新文章不可用：", getErrorLogContext(error));
-            return [];
-        }
-
-        throw error;
-    }
 }

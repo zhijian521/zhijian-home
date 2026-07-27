@@ -4,10 +4,11 @@
   展示服务端提供的三篇最新文章；无数据时直接呈现空状态。
 ============================================================================*/
 
-import { PostCard } from "@/components/home/post-card";
 import { SectionHeading } from "@/components/site/section-heading";
 import { TextButton } from "@/components/ui/text-button";
 import type { PostPreview } from "@/types/post";
+
+import { PostCard } from "@/features/home/ui/post-card";
 
 import styles from "./posts-section.module.css";
 

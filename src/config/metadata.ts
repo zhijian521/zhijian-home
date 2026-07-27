@@ -1,14 +1,14 @@
 /*============================================================================
   metadata - 站点元数据
 
-  集中维护站点 URL、跨页面默认值、首页 SEO 与结构化数据。
+  集中维护站点 URL、跨页面默认值与根布局元数据。
 ============================================================================*/
 
 import "server-only";
 
 import type { Metadata } from "next";
 
-import { ABOUT_CONTENT, HERO_CONTENT } from "@/config/home";
+import { HERO_CONTENT } from "@/config/home";
 
 const DEFAULT_SITE_URL = "https://yuwb.dev";
 export const DEFAULT_OG_IMAGE = "/images/og-default.webp";
@@ -84,58 +84,6 @@ export const ROOT_METADATA = {
         follow: true,
     },
 } satisfies Metadata;
-
-/*== 首页元数据 ==*/
-export const HOME_METADATA = {
-    title: { absolute: SITE_METADATA.brandTitle },
-    description: SITE_METADATA.description,
-    keywords: [...SITE_METADATA.keywords],
-    alternates: { canonical: "/" },
-    openGraph: {
-        type: "website",
-        locale: SITE_METADATA.locale,
-        siteName: SITE_METADATA.name,
-        title: SITE_METADATA.brandTitle,
-        description: SITE_METADATA.description,
-        url: "/",
-        images: [{ url: DEFAULT_OG_IMAGE, alt: SITE_METADATA.brandTitle }],
-    },
-    twitter: {
-        card: "summary_large_image",
-        title: SITE_METADATA.brandTitle,
-        description: SITE_METADATA.description,
-        images: [DEFAULT_OG_IMAGE],
-    },
-} satisfies Metadata;
-
-/*== 首页结构化数据：当前只声明已真实存在的站点与作者实体 ==*/
-const homeJsonLd = {
-    "@context": "https://schema.org",
-    "@graph": [
-        {
-            "@type": "WebSite",
-            "@id": new URL("#website", SITE_METADATA.siteUrl).toString(),
-            url: SITE_METADATA.siteUrl.toString(),
-            name: SITE_METADATA.name,
-            alternateName: SITE_METADATA.brandName,
-            description: SITE_METADATA.description,
-            inLanguage: "zh-CN",
-            publisher: { "@id": new URL("#author", SITE_METADATA.siteUrl).toString() },
-        },
-        {
-            "@type": "Person",
-            "@id": new URL("#author", SITE_METADATA.siteUrl).toString(),
-            name: HERO_CONTENT.author,
-            url: SITE_METADATA.siteUrl.toString(),
-            image: new URL("/images/profile.webp", SITE_METADATA.siteUrl).toString(),
-            description: ABOUT_CONTENT.bio,
-            sameAs: [ABOUT_CONTENT.links.github],
-        },
-    ],
-};
-
-/*== 转义小于号，避免 JSON 内容提前闭合 script 标签 ==*/
-export const HOME_JSON_LD = JSON.stringify(homeJsonLd).replace(/</g, "\\u003c");
 
 function resolveSiteUrl(value: string | undefined): URL {
     let siteUrl: URL;
