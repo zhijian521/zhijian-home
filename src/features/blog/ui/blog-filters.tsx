@@ -18,7 +18,6 @@ import styles from "./blog-filters.module.css";
 interface BlogFiltersProps {
     activeFilters: BlogActiveFilter[];
     categories: BlogFilterOption[];
-    clearAllHref?: string;
     tags: BlogFilterOption[];
 }
 
@@ -28,7 +27,7 @@ interface BlogFilterOptionsProps {
     tags: BlogFilterOption[];
 }
 
-export function BlogFilters({ activeFilters, categories, clearAllHref, tags }: BlogFiltersProps) {
+export function BlogFilters({ activeFilters, categories, tags }: BlogFiltersProps) {
     const [isDialogOpen, setIsDialogOpen] = useState(false);
     const dialogId = useId();
     const dialogRef = useRef<HTMLDialogElement>(null);
@@ -93,7 +92,6 @@ export function BlogFilters({ activeFilters, categories, clearAllHref, tags }: B
                                 {filter.label}
                             </Button>
                         ))}
-                        {clearAllHref ? <Button href={clearAllHref}>全部清除</Button> : null}
                     </nav>
                 ) : null}
 

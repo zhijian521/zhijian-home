@@ -78,7 +78,6 @@ export default async function BlogPage({ searchParams }: BlogPageProps) {
                     <BlogFilters
                         activeFilters={activeFilters}
                         categories={categories}
-                        clearAllHref={hasActiveFilters ? getBlogHref() : undefined}
                         tags={tags}
                     />
 
