@@ -15,7 +15,7 @@ export const metadata: Metadata = ROOT_METADATA;
 
 export default function RootLayout({ children }: PropsWithChildren) {
     return (
-        <html lang="zh-CN">
+        <html data-scroll-behavior="smooth" lang="zh-CN">
             <body>{children}</body>
         </html>
     );
