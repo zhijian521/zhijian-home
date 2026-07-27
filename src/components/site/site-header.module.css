@@ -38,7 +38,6 @@
     color: var(--action-primary);
     font-family: var(--font-serif);
     font-size: var(--font-size-6);
-    font-weight: var(--font-weight-semibold);
     text-decoration: none;
     transition: opacity var(--duration-normal) var(--ease-standard);
 }
