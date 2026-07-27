@@ -4,11 +4,12 @@
   基于 Lucide 统一管理站点图标，并提供按名称与具名组件两种用法。
 ============================================================================*/
 
-import { ArrowDown, ArrowRight, ArrowUpRight, BookOpen, Code2, GitBranch, Home, List, Mail, Rss, type LucideProps } from "lucide-react";
+import { ArrowDown, ArrowLeft, ArrowRight, ArrowUpRight, BookOpen, Code2, GitBranch, Home, List, Mail, Rss, X, type LucideProps } from "lucide-react";
 
 /*== 图标注册表 ==*/
 const ICON_COMPONENTS = {
     "arrow-down": ArrowDown,
+    "arrow-left": ArrowLeft,
     "arrow-right": ArrowRight,
     "book-open": BookOpen,
     code: Code2,
@@ -18,6 +19,7 @@ const ICON_COMPONENTS = {
     list: List,
     mail: Mail,
     rss: Rss,
+    x: X,
 } as const;
 
 /*== 名称类型由注册表键自动推导 ==*/
@@ -28,7 +30,7 @@ export interface IconProps extends Omit<LucideProps, "children"> {
     name: IconName;
 }
 
-/*== 有标签时提供语义，否则作为装饰图标隐藏 ==*/
+/*== 按名称渲染；有标签时提供语义，否则作为装饰图标隐藏 ==*/
 export function Icon({ name, "aria-label": ariaLabel, ...props }: IconProps) {
     const IconComponent = ICON_COMPONENTS[name];
 
