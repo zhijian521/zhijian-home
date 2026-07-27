@@ -1,0 +1,137 @@
+/*== 博客筛选 ==*/
+.active {
+    grid-area: active-filters;
+    display: flex;
+    align-items: flex-start;
+    gap: var(--space-3);
+    margin-bottom: var(--space-6);
+}
+
+.activeList {
+    display: flex;
+    min-width: 0;
+    flex: 1;
+    flex-wrap: wrap;
+    gap: var(--space-2);
+}
+
+.mobileTrigger {
+    margin-left: auto;
+}
+
+.sidebar,
+.dialog {
+    --blog-filters-border: var(--action-primary);
+    --blog-filters-title: var(--text-primary);
+    --blog-filters-title-border: var(--border-default);
+}
+
+.sidebar {
+    display: none;
+    gap: var(--space-6);
+}
+
+.section {
+    display: grid;
+    gap: var(--space-3);
+    border: var(--border-width-1) solid var(--blog-filters-border);
+    padding: var(--space-4);
+}
+
+.heading {
+    display: flex;
+    min-height: 2rem;
+    align-items: center;
+    justify-content: space-between;
+    border-bottom: var(--border-width-1) solid var(--blog-filters-title-border);
+    gap: var(--space-3);
+}
+
+.title {
+    font-family: var(--font-serif);
+    font-size: var(--font-size-4);
+    font-weight: var(--font-weight-semibold);
+    line-height: var(--line-height-tight);
+    color: var(--blog-filters-title);
+}
+
+.categories,
+.tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-2);
+}
+
+.tags {
+    max-height: 15rem;
+    overflow-y: auto;
+}
+
+/*== 移动端弹窗 ==*/
+.dialog {
+    --blog-dialog-background: var(--surface-page);
+    --blog-dialog-backdrop: color-mix(in srgb, var(--color-ink-950) var(--alpha-60), transparent);
+    --blog-dialog-border: var(--action-primary);
+
+    width: min(calc(100% - var(--space-8)), 24rem);
+    max-height: calc(100dvh - var(--space-8));
+    border: var(--border-width-1) solid var(--blog-dialog-border);
+    padding: 0;
+    overflow: hidden;
+    background: var(--blog-dialog-background);
+    color: var(--text-primary);
+}
+
+.dialog::backdrop {
+    background: var(--blog-dialog-backdrop);
+}
+
+.dialogHeader {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--space-3);
+    border-bottom: var(--border-width-1) solid var(--blog-filters-title-border);
+    padding: var(--space-4);
+}
+
+.dialogTitle {
+    font-family: var(--font-serif);
+    font-size: var(--font-size-5);
+    font-weight: var(--font-weight-semibold);
+    line-height: var(--line-height-tight);
+}
+
+.dialogBody {
+    display: grid;
+    gap: var(--space-6);
+    max-height: calc(100dvh - var(--space-24));
+    padding: var(--space-4);
+    overflow-y: auto;
+}
+
+.dialog .section {
+    border: 0;
+    padding: 0;
+}
+
+.dialog .tags {
+    max-height: min(14rem, 35dvh);
+}
+
+@media (min-width: 48rem) {
+    .noActiveFilters {
+        display: none;
+    }
+
+    .mobileTrigger,
+    .dialog {
+        display: none;
+    }
+
+    .sidebar {
+        display: grid;
+        grid-area: filter-sidebar;
+        align-self: start;
+    }
+}
