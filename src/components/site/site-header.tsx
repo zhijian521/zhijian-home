@@ -27,7 +27,7 @@ export function SiteHeader() {
     const isScrolled = useScrollThreshold(8);
     const navItems = NAV_ITEMS.map((item) => ({
         ...item,
-        isCurrent: pathname === item.href,
+        isCurrent: isCurrentNavigationItem(pathname, item.href),
     }));
 
     return (
@@ -60,4 +60,12 @@ export function SiteHeader() {
             </div>
         </header>
     );
+}
+
+function isCurrentNavigationItem(pathname: string, href: string): boolean {
+    if (href === "/") {
+        return pathname === href;
+    }
+
+    return pathname === href || pathname.startsWith(`${href}/`);
 }
