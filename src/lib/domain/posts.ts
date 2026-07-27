@@ -11,14 +11,7 @@ import type { RowDataPacket } from "mysql2";
 
 import { getDb } from "@/lib/core/db";
 import { ServiceUnavailableError } from "@/lib/core/errors";
-import type {
-    NormalizedPublishedPostsPageQuery,
-    PostFilterOption,
-    PublishedPostFilters,
-    PostPreview,
-    PublishedPostsPage,
-    PublishedPostsPageQuery,
-} from "@/types/post";
+import type { NormalizedPublishedPostsPageQuery, PostPreview, PublishedPostsPage, PublishedPostsPageQuery } from "@/types/post";
 
 /*== 已发布文章查询的共享缓存时长 ==*/
 const LATEST_POST_LIMIT = 3;
@@ -43,11 +36,6 @@ interface PostPreviewRow extends RowDataPacket {
 
 interface PostCountRow extends RowDataPacket {
     total: number;
-}
-
-interface PostFilterOptionRow extends RowDataPacket {
-    name: string;
-    slug: string;
 }
 
 /*== 仅查询已发布文章，排序优先使用最近更新时间，再回退发布时间 ==*/
@@ -93,51 +81,6 @@ export const getLatestPosts = unstable_cache(queryLatestPosts, ["latest-posts"],
     revalidate: PUBLISHED_POSTS_CACHE_SECONDS,
     tags: ["latest-posts"],
 });
-
-/*== 读取文章筛选项；数据库不可用时抛出 ServiceUnavailableError。==*/
-export async function getPublishedPostFilters(): Promise<PublishedPostFilters> {
-    return getCachedPublishedPostFilters();
-}
-
-/*== 分类和标签按旧站顺序并行查询，供博客列表生成可分享的筛选链接 ==*/
-const getCachedPublishedPostFilters = unstable_cache(queryPublishedPostFilters, ["published-post-filters"], {
-    revalidate: PUBLISHED_POSTS_CACHE_SECONDS,
-    tags: ["published-post-filters"],
-});
-
-async function queryPublishedPostFilters(): Promise<PublishedPostFilters> {
-    const db = getDb();
-
-    if (!db) {
-        throw new ServiceUnavailableError();
-    }
-
-    try {
-        const [[categoryRows], [tagRows]] = await Promise.all([
-            db.execute<PostFilterOptionRow[]>(
-                `
-                    SELECT c.name, c.slug
-                    FROM zhijian_blog_categories c
-                    ORDER BY c.sort_order ASC, c.id ASC
-                `,
-            ),
-            db.execute<PostFilterOptionRow[]>(
-                `
-                    SELECT t.name, t.slug
-                    FROM zhijian_blog_tags t
-                    ORDER BY t.id ASC
-                `,
-            ),
-        ]);
-
-        return {
-            categories: categoryRows.map(toPostFilterOption),
-            tags: tagRows.map(toPostFilterOption),
-        };
-    } catch (error) {
-        throw new ServiceUnavailableError(error);
-    }
-}
 
 /*== 读取一页已发布文章的最小展示数据；数据库不可用时抛出 ServiceUnavailableError。 ==*/
 export async function getPublishedPostsPage(query: PublishedPostsPageQuery = {}): Promise<PublishedPostsPage> {
@@ -298,13 +241,6 @@ function toPostPreview(row: PostPreviewRow): PostPreview {
         updatedAt: row.updated_at,
         coverImage: getSafeCoverImage(row.cover_image),
         altText: row.alt_text,
-    };
-}
-
-function toPostFilterOption(row: PostFilterOptionRow): PostFilterOption {
-    return {
-        name: row.name,
-        slug: row.slug,
     };
 }
 

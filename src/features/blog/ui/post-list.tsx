@@ -21,6 +21,7 @@ export function PostList({ posts }: PostListProps) {
     return (
         <ol aria-label="文章列表" className={styles.list}>
             {posts.map((post) => {
+                /*== 列表按最近更新时间排序，展示日期也优先反映最近修订 ==*/
                 const postDate = post.updatedAt ?? post.publishedAt;
                 const formattedPostDate = formatPostDate(postDate);
                 const coverImage = post.coverImage;

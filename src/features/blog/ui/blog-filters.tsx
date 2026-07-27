@@ -11,20 +11,9 @@ import { useEffect, useId, useRef, useState } from "react";
 
 import { Button } from "@/components/ui/button";
 import { IconButton } from "@/components/ui/icon-button";
+import type { BlogActiveFilter, BlogFilterOption } from "@/features/blog/lib/filters";
 
 import styles from "./blog-filters.module.css";
-
-export interface BlogFilterOption {
-    href: string;
-    isActive: boolean;
-    label: string;
-}
-
-export interface BlogActiveFilter {
-    href: string;
-    id: string;
-    label: string;
-}
 
 interface BlogFiltersProps {
     activeFilters: BlogActiveFilter[];
@@ -47,6 +36,7 @@ export function BlogFilters({ activeFilters, categories, clearAllHref, tags }: B
     const hasTags = tags.length > 0;
     const hasActiveFilters = activeFilters.length > 0;
 
+    /*== 原生 dialog 的 Esc 与代码关闭都会触发 onClose，React 状态据此与模态状态保持同步 ==*/
     useEffect(() => {
         const dialog = dialogRef.current;
 
