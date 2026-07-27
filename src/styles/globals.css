@@ -38,6 +38,30 @@ svg {
     background: color-mix(in srgb, var(--action-primary) var(--alpha-20), transparent);
 }
 
+/*== 全局滚动条 ==*/
+* {
+    scrollbar-width: thin;
+    scrollbar-color: var(--color-paper-150) transparent;
+}
+
+::-webkit-scrollbar {
+    width: 4px;
+    height: 4px;
+}
+
+::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+    border-radius: var(--radius);
+    background: var(--color-paper-150);
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: var(--color-paper-200);
+}
+
 :focus-visible {
     outline: var(--border-width-2) solid var(--border-focus);
     outline-offset: var(--space-0-5);
