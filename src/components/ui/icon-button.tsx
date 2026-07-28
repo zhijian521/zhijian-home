@@ -6,6 +6,7 @@
 
 import clsx from "clsx";
 import Link from "next/link";
+import type { MouseEventHandler } from "react";
 
 import { Icon, type IconName } from "@/components/ui/icons";
 
@@ -29,7 +30,7 @@ type LinkIconButtonProps = IconButtonBaseProps & {
 type NativeIconButtonProps = IconButtonBaseProps & {
     asButton: true;
     href?: never;
-    onClick: () => void;
+    onClick: MouseEventHandler<HTMLButtonElement>;
 };
 
 type IconButtonProps = LinkIconButtonProps | NativeIconButtonProps;

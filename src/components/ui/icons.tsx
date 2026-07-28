@@ -4,7 +4,7 @@
   基于 Lucide 统一管理站点图标，并提供按名称与具名组件两种用法。
 ============================================================================*/
 
-import { ArrowDown, ArrowLeft, ArrowRight, ArrowUpRight, BookOpen, Code2, GitBranch, Home, List, Mail, Rss, X, type LucideProps } from "lucide-react";
+import { ArrowDown, ArrowLeft, ArrowRight, ArrowUpRight, BookOpen, Check, ChevronDown, Code2, Copy, Folder, GitBranch, Home, List, Mail, MoreHorizontal, Rss, Search, X, type LucideProps } from "lucide-react";
 
 /*== 图标注册表 ==*/
 const ICON_COMPONENTS = {
@@ -12,13 +12,19 @@ const ICON_COMPONENTS = {
     "arrow-left": ArrowLeft,
     "arrow-right": ArrowRight,
     "book-open": BookOpen,
+    "chevron-down": ChevronDown,
+    check: Check,
     code: Code2,
+    copy: Copy,
     "external-link": ArrowUpRight,
+    folder: Folder,
     github: GitBranch,
     home: Home,
     list: List,
     mail: Mail,
+    "more-horizontal": MoreHorizontal,
     rss: Rss,
+    search: Search,
     x: X,
 } as const;
 
