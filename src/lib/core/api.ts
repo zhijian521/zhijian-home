@@ -9,6 +9,8 @@ import "server-only";
 import { NextResponse } from "next/server";
 
 import { getErrorLogContext, isServiceUnavailableError } from "@/lib/core/errors";
+import { checkRateLimit, PUBLIC_API_RATE_LIMIT } from "@/lib/core/rate-limit";
+import { getClientIp } from "@/lib/core/request-ip";
 import type { ApiResponse } from "@/types/api";
 
 const API_SUCCESS_CODE = "SUCCESS";
@@ -49,6 +51,23 @@ export function jsonError(code: string, message: string, options: ApiErrorOption
             headers,
         }
     );
+}
+
+/*== 公开接口共享客户端限流策略，调用方仅需提供区分接口的作用域 ==*/
+export function getPublicApiRateLimitError(request: Request, scope: string): NextResponse<ApiResponse<null>> | null {
+    const clientIp = getClientIp(request);
+    const rateLimit = checkRateLimit(`${scope}:${clientIp}`, PUBLIC_API_RATE_LIMIT);
+
+    if (rateLimit.allowed) {
+        return null;
+    }
+
+    return jsonError("RATE_LIMITED", "请求过于频繁，请稍后再试。", {
+        status: 429,
+        headers: {
+            "Retry-After": String(rateLimit.retryAfterSeconds),
+        },
+    });
 }
 
 /*== 将未处理异常转换为不泄露内部信息的公共响应 ==*/

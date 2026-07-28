@@ -10,7 +10,7 @@ import Image from "next/image";
 import { useEffect, useRef, useState } from "react";
 
 import { Icon } from "@/components/ui/icons";
-import { NAV_SEARCH_ENGINES } from "@/features/nav/config";
+import { NAV_SEARCH_ENGINES, NAV_SEARCH_HISTORY_LIMIT } from "@/features/nav/config";
 import {
     clearNavSearchHistory,
     getNavSearchEngine,
@@ -82,7 +82,7 @@ export function SearchBar() {
         const nextHistory = [
             { engineKey: engineKeyForRecord, id: createHistoryId(), query: value, timestamp: Date.now() },
             ...history.filter((item) => item.query !== value),
-        ];
+        ].slice(0, NAV_SEARCH_HISTORY_LIMIT);
         saveNavSearchHistory(nextHistory);
         setHistory(nextHistory);
         setQuery("");

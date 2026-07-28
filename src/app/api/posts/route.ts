@@ -4,9 +4,7 @@
   按分类和标签分页返回已发布文章的预览数据，不包含正文内容。
 ============================================================================*/
 
-import { jsonError, jsonSuccess, withApiErrorHandling } from "@/lib/core/api";
-import { checkRateLimit, PUBLIC_API_RATE_LIMIT } from "@/lib/core/rate-limit";
-import { getClientIp } from "@/lib/core/request-ip";
+import { getPublicApiRateLimitError, jsonSuccess, withApiErrorHandling } from "@/lib/core/api";
 import { getPublishedPostsPage, PUBLISHED_POSTS_CACHE_SECONDS, PUBLISHED_POSTS_STALE_SECONDS } from "@/lib/domain/posts";
 
 export const dynamic = "force-dynamic";
@@ -14,17 +12,9 @@ export const dynamic = "force-dynamic";
 export const runtime = "nodejs";
 
 export async function GET(request: Request) {
-    const clientIp = getClientIp(request);
-    const rateLimit = checkRateLimit(`published-posts:${clientIp}`, PUBLIC_API_RATE_LIMIT);
+    const rateLimitError = getPublicApiRateLimitError(request, "published-posts");
 
-    if (!rateLimit.allowed) {
-        return jsonError("RATE_LIMITED", "请求过于频繁，请稍后再试。", {
-            status: 429,
-            headers: {
-                "Retry-After": String(rateLimit.retryAfterSeconds),
-            },
-        });
-    }
+    if (rateLimitError) return rateLimitError;
 
     const searchParams = new URL(request.url).searchParams;
 

@@ -4,9 +4,7 @@
   返回博客列表可用的分类和标签，不与分页文章接口混合。
 ============================================================================*/
 
-import { jsonError, jsonSuccess, withApiErrorHandling } from "@/lib/core/api";
-import { checkRateLimit, PUBLIC_API_RATE_LIMIT } from "@/lib/core/rate-limit";
-import { getClientIp } from "@/lib/core/request-ip";
+import { getPublicApiRateLimitError, jsonSuccess, withApiErrorHandling } from "@/lib/core/api";
 import { getPublishedPostFilters, POST_FILTERS_CACHE_SECONDS, POST_FILTERS_STALE_SECONDS } from "@/lib/domain/post-filters";
 
 export const dynamic = "force-dynamic";
@@ -14,17 +12,9 @@ export const dynamic = "force-dynamic";
 export const runtime = "nodejs";
 
 export async function GET(request: Request) {
-    const clientIp = getClientIp(request);
-    const rateLimit = checkRateLimit(`blog-filters:${clientIp}`, PUBLIC_API_RATE_LIMIT);
+    const rateLimitError = getPublicApiRateLimitError(request, "blog-filters");
 
-    if (!rateLimit.allowed) {
-        return jsonError("RATE_LIMITED", "请求过于频繁，请稍后再试。", {
-            status: 429,
-            headers: {
-                "Retry-After": String(rateLimit.retryAfterSeconds),
-            },
-        });
-    }
+    if (rateLimitError) return rateLimitError;
 
     return withApiErrorHandling(async () => {
         const data = await getPublishedPostFilters();

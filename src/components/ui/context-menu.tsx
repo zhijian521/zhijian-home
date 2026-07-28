@@ -19,6 +19,7 @@ export interface ContextMenuAction {
     onSelect: () => void;
     danger?: boolean;
     disabled?: boolean;
+    restoreFocus?: boolean;
 }
 
 export interface ContextMenuPosition {
@@ -96,7 +97,7 @@ export function ContextMenu({ actions, onClose, position }: ContextMenuProps) {
         if (action.disabled) return;
 
         action.onSelect();
-        onClose();
+        onClose(action.restoreFocus);
     }
 
     return (

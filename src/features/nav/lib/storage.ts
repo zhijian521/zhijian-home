@@ -128,16 +128,18 @@ export function getNavSearchHistory(): NavSearchHistoryItem[] {
     const history = readStorage<unknown>(NAV_STORAGE_KEYS.searchHistory);
     if (!Array.isArray(history)) return [];
 
-    /*== 忽略损坏项，避免单条历史记录影响整个搜索面板 ==*/
-    return history.filter(
-        (item): item is NavSearchHistoryItem =>
-            Boolean(item) &&
-            typeof item === "object" &&
-            typeof (item as NavSearchHistoryItem).id === "string" &&
-            typeof (item as NavSearchHistoryItem).query === "string" &&
-            typeof (item as NavSearchHistoryItem).engineKey === "string" &&
-            typeof (item as NavSearchHistoryItem).timestamp === "number",
-    );
+    /*== 忽略损坏项并限制数量，避免异常存储拖慢整个搜索面板 ==*/
+    return history
+        .filter(
+            (item): item is NavSearchHistoryItem =>
+                Boolean(item) &&
+                typeof item === "object" &&
+                typeof (item as NavSearchHistoryItem).id === "string" &&
+                typeof (item as NavSearchHistoryItem).query === "string" &&
+                typeof (item as NavSearchHistoryItem).engineKey === "string" &&
+                typeof (item as NavSearchHistoryItem).timestamp === "number",
+        )
+        .slice(0, NAV_SEARCH_HISTORY_LIMIT);
 }
 
 export function saveNavSearchHistory(history: NavSearchHistoryItem[]): void {
