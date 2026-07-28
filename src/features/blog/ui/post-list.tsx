@@ -8,13 +8,14 @@
 
 import Link from "next/link";
 
+import { Tag } from "@/components/ui/tag";
 import { formatPostDate } from "@/lib/core/date";
-import type { PostPreview } from "@/types/post";
+import type { PublishedPostPreview } from "@/types/post";
 
 import styles from "./post-list.module.css";
 
 interface PostListProps {
-    posts: PostPreview[];
+    posts: PublishedPostPreview[];
 }
 
 export function PostList({ posts }: PostListProps) {
@@ -37,6 +38,13 @@ export function PostList({ posts }: PostListProps) {
 
                                     <div className={styles.meta}>
                                         {post.categoryName ? <span className={styles.category}>{post.categoryName}</span> : null}
+                                        {post.tags.length > 0 ? (
+                                            <div className={styles.tags}>
+                                                {post.tags.map((tag) => (
+                                                    <Tag key={tag.slug}>{tag.name}</Tag>
+                                                ))}
+                                            </div>
+                                        ) : null}
                                         {formattedPostDate ? (
                                             <time className={styles.date} dateTime={postDate?.slice(0, 10)}>
                                                 {formattedPostDate}

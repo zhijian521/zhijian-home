@@ -46,10 +46,13 @@ interface PostCountRow extends RowDataPacket {
     total: number;
 }
 
-interface PublishedPostDetailRow extends PostPreviewRow {
+interface PublishedPostPreviewRow extends PostPreviewRow {
+    tags: number[] | string | null;
+}
+
+interface PublishedPostDetailRow extends PublishedPostPreviewRow {
     content: string | null;
     category_slug: string | null;
-    tags: number[] | string | null;
 }
 
 interface PostTagRow extends RowDataPacket {
@@ -160,7 +163,7 @@ async function queryPublishedPostBySlug(slug: string): Promise<PublishedPostDeta
             return null;
         }
 
-        const tags = await getPublishedPostTags(db, parsePostTagIds(row.tags));
+        const [tags] = await getPublishedPostsTags(db, [parsePostTagIds(row.tags)]);
 
         return {
             ...toPostPreview(row),
@@ -203,7 +206,7 @@ async function queryPublishedPostsPage(page: number, pageSize: number, categoryS
                 `,
                 ["published", ...values],
             ),
-            db.execute<PostPreviewRow[]>(
+            db.execute<PublishedPostPreviewRow[]>(
                 `
                     SELECT
                         p.slug,
@@ -213,7 +216,8 @@ async function queryPublishedPostsPage(page: number, pageSize: number, categoryS
                         DATE_FORMAT(p.published_at, '%Y-%m-%d %H:%i:%s') AS published_at,
                         DATE_FORMAT(p.updated_at, '%Y-%m-%d %H:%i:%s') AS updated_at,
                         p.cover_image,
-                        p.alt_text
+                        p.alt_text,
+                        p.tags
                 FROM zhijian_blog_posts p
                 LEFT JOIN zhijian_blog_categories c ON p.category_id = c.id
                 ${whereClause}
@@ -224,9 +228,10 @@ async function queryPublishedPostsPage(page: number, pageSize: number, categoryS
             ),
         ]);
         const total = Number(countRows[0]?.total ?? 0);
+        const tagsByPost = await getPublishedPostsTags(db, rows.map((row) => parsePostTagIds(row.tags)));
 
         return {
-            posts: rows.map(toPostPreview),
+            posts: rows.map((row, index) => ({ ...toPostPreview(row), tags: tagsByPost[index] })),
             page,
             pageSize,
             total,
@@ -328,9 +333,12 @@ function toPostPreview(row: PostPreviewRow): PostPreview {
     };
 }
 
-async function getPublishedPostTags(db: Pool, tagIds: number[]): Promise<PostFilterOption[]> {
+/*== 分页列表的标签统一批量读取，避免每篇文章额外发起一次查询。 ==*/
+async function getPublishedPostsTags(db: Pool, postTagIds: number[][]): Promise<PostFilterOption[][]> {
+    const tagIds = [...new Set(postTagIds.flat())];
+
     if (tagIds.length === 0) {
-        return [];
+        return postTagIds.map(() => []);
     }
 
     const [rows] = await db.execute<PostTagRow[]>(
@@ -339,10 +347,10 @@ async function getPublishedPostTags(db: Pool, tagIds: number[]): Promise<PostFil
     );
     const tagsById = new Map(rows.map((tag) => [tag.id, { name: tag.name, slug: tag.slug }]));
 
-    return tagIds.flatMap((tagId) => {
+    return postTagIds.map((ids) => ids.flatMap((tagId) => {
         const tag = tagsById.get(tagId);
         return tag ? [tag] : [];
-    });
+    }));
 }
 
 /*== 标签 JSON 由后台维护，但仍限制数量与 ID 范围，避免详情查询构造无界参数列表。 ==*/
