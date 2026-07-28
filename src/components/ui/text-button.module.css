@@ -10,7 +10,7 @@
     transition: color var(--duration-normal) var(--ease-standard);
 }
 
-a.root:hover {
+.root:hover {
     color: var(--action-primary-hover);
 }
 
@@ -20,7 +20,7 @@ a.root:hover {
     flex: 0 0 1em;
 }
 
-a.root:hover .icon {
+.root:hover .icon {
     animation: text-button-icon-nudge var(--duration-slower) var(--ease-standard);
 }
 
@@ -32,7 +32,7 @@ a.root:hover .icon {
 
 @media (prefers-reduced-motion: reduce) {
     /*== 尊重系统减少动态偏好 ==*/
-    a.root:hover .icon {
+    .root:hover .icon {
         animation: none;
     }
 }
