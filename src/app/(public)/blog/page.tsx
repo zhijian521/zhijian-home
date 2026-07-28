@@ -12,18 +12,11 @@ import { TextButton } from "@/components/ui/text-button";
 import { buildBlogJsonLd, buildBlogMetadata } from "@/features/blog/lib/metadata";
 import { buildBlogActiveFilters, buildBlogFilterOptions, getBlogHref, getTagSlugs } from "@/features/blog/lib/filters";
 import { getBlogListPageData } from "@/features/blog/lib/list-page-data";
+import { parseBlogSearchParams, type BlogSearchParams } from "@/features/blog/lib/query";
 import { BlogFilters } from "@/features/blog/ui/blog-filters";
 import { PostList } from "@/features/blog/ui/post-list";
-import { normalizePublishedPostsPageQuery } from "@/lib/domain/posts";
-import type { NormalizedPublishedPostsPageQuery } from "@/types/post";
 
 import styles from "./page.module.css";
-
-interface BlogSearchParams {
-    category?: string | string[];
-    page?: string | string[];
-    tags?: string | string[];
-}
 
 interface BlogPageProps {
     searchParams: Promise<BlogSearchParams>;
@@ -33,14 +26,14 @@ interface BlogPageProps {
 export const dynamic = "force-dynamic";
 
 export async function generateMetadata({ searchParams }: BlogPageProps): Promise<Metadata> {
-    const query = getBlogQuery(await searchParams);
+    const query = parseBlogSearchParams(await searchParams);
     const pageData = await getBlogListPageData(query);
 
     return buildBlogMetadata(pageData);
 }
 
 export default async function BlogPage({ searchParams }: BlogPageProps) {
-    const query = getBlogQuery(await searchParams);
+    const query = parseBlogSearchParams(await searchParams);
     const blogData = await getBlogListPageData(query);
 
     if (!blogData) {
@@ -122,19 +115,4 @@ function BlogUnavailable() {
             </div>
         </main>
     );
-}
-
-function getBlogQuery(searchParams: BlogSearchParams): NormalizedPublishedPostsPageQuery {
-    const page = getSearchParam(searchParams.page);
-    const tags = getSearchParam(searchParams.tags);
-
-    return normalizePublishedPostsPageQuery({
-        categorySlug: getSearchParam(searchParams.category),
-        page: page === undefined ? undefined : Number(page),
-        tagSlugs: tags?.split(","),
-    });
-}
-
-function getSearchParam(value: string | string[] | undefined): string | undefined {
-    return Array.isArray(value) ? value[0] : value;
 }
