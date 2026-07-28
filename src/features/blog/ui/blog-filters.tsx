@@ -3,20 +3,18 @@
 /*============================================================================
   blog filters - 博客筛选
 
-  使用 URL 链接承载筛选状态，桌面端显示右侧栏，移动端收纳进弹窗。
+  使用 URL 链接承载筛选状态，桌面端显示固定左侧栏，移动端收纳进弹窗。
 ============================================================================*/
 
-import clsx from "clsx";
 import { useEffect, useId, useRef, useState } from "react";
 
 import { Button } from "@/components/ui/button";
 import { IconButton } from "@/components/ui/icon-button";
-import type { BlogActiveFilter, BlogFilterOption } from "@/features/blog/lib/filters";
+import type { BlogFilterOption } from "@/features/blog/lib/filters";
 
 import styles from "./blog-filters.module.css";
 
 interface BlogFiltersProps {
-    activeFilters: BlogActiveFilter[];
     categories: BlogFilterOption[];
     tags: BlogFilterOption[];
 }
@@ -27,13 +25,12 @@ interface BlogFilterOptionsProps {
     tags: BlogFilterOption[];
 }
 
-export function BlogFilters({ activeFilters, categories, tags }: BlogFiltersProps) {
+export function BlogFilters({ categories, tags }: BlogFiltersProps) {
     const [isDialogOpen, setIsDialogOpen] = useState(false);
     const dialogId = useId();
     const dialogRef = useRef<HTMLDialogElement>(null);
     const hasCategories = categories.length > 1;
     const hasTags = tags.length > 0;
-    const hasActiveFilters = activeFilters.length > 0;
 
     /*== 原生 dialog 的 Esc 与代码关闭都会触发 onClose，React 状态据此与模态状态保持同步 ==*/
     useEffect(() => {
@@ -84,27 +81,15 @@ export function BlogFilters({ activeFilters, categories, tags }: BlogFiltersProp
 
     return (
         <>
-            <div className={clsx(styles.active, !hasActiveFilters && styles.noActiveFilters)}>
-                {hasActiveFilters ? (
-                    <nav aria-label="当前筛选条件" className={styles.activeList}>
-                        {activeFilters.map((filter) => (
-                            <Button href={filter.href} icon="x" key={filter.id} variant="primary">
-                                {filter.label}
-                            </Button>
-                        ))}
-                    </nav>
-                ) : null}
-
-                <Button
-                    aria-controls={dialogId}
-                    aria-expanded={isDialogOpen}
-                    asButton
-                    className={styles.mobileTrigger}
-                    onClick={() => setIsDialogOpen(true)}
-                >
-                    筛选
-                </Button>
-            </div>
+            <Button
+                aria-controls={dialogId}
+                aria-expanded={isDialogOpen}
+                asButton
+                className={styles.mobileTrigger}
+                onClick={() => setIsDialogOpen(true)}
+            >
+                筛选
+            </Button>
 
             <aside aria-label="文章筛选" className={styles.sidebar}>
                 <BlogFilterOptions categories={categories} tags={tags} />
@@ -149,7 +134,14 @@ function BlogFilterOptions({ categories, onSelect, tags }: BlogFilterOptionsProp
                     </div>
                     <div className={styles.categories}>
                         {categories.map((category) => (
-                            <Button href={category.href} isActive={category.isActive} key={category.href} onClick={onSelect} variant="primary">
+                            <Button
+                                className={styles.categoryButton}
+                                href={category.href}
+                                isActive={category.isActive}
+                                key={category.href}
+                                onClick={onSelect}
+                                variant="primary"
+                            >
                                 {category.label}
                             </Button>
                         ))}

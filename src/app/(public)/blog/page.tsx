@@ -5,12 +5,13 @@
 ============================================================================*/
 
 import type { Metadata } from "next";
+import clsx from "clsx";
 import { redirect } from "next/navigation";
 
 import { Pagination } from "@/components/ui/pagination";
 import { TextButton } from "@/components/ui/text-button";
 import { buildBlogJsonLd, buildBlogMetadata } from "@/features/blog/lib/metadata";
-import { buildBlogActiveFilters, buildBlogFilterOptions, getBlogHref, getTagSlugs } from "@/features/blog/lib/filters";
+import { buildBlogFilterOptions, getBlogHref, getTagSlugs } from "@/features/blog/lib/filters";
 import { getBlogListPageData } from "@/features/blog/lib/list-page-data";
 import { parseBlogSearchParams, type BlogSearchParams } from "@/features/blog/lib/query";
 import { BlogFilters } from "@/features/blog/ui/blog-filters";
@@ -57,20 +58,20 @@ export default async function BlogPage({ searchParams }: BlogPageProps) {
     /*== 当前筛选分页状态 ==*/
     const currentPage = pageData.totalPages > 0 ? pageData.page : 1;
     const { categories, tags } = buildBlogFilterOptions(filters, filterOptions);
-    const activeFilters = buildBlogActiveFilters(filters);
     const hasActiveFilters = Boolean(filters.category) || tagSlugs.length > 0;
+    const hasFilters = categories.length > 1 || tags.length > 0;
     const blogJsonLd = buildBlogJsonLd({ filters, pageData });
 
     return (
         <main className={styles.page}>
             <script dangerouslySetInnerHTML={{ __html: blogJsonLd }} type="application/ld+json" />
             <div className={styles.container}>
-                <header className={styles.header}>
-                    <h1 className={styles.title}>文章</h1>
-                </header>
+                <div className={clsx(styles.layout, !hasFilters && styles.layoutWithoutFilters)}>
+                    <header className={styles.header}>
+                        <h1 className={styles.title}>文章</h1>
+                    </header>
 
-                <div className={styles.layout}>
-                    <BlogFilters activeFilters={activeFilters} categories={categories} tags={tags} />
+                    {hasFilters ? <BlogFilters categories={categories} tags={tags} /> : null}
 
                     <div className={styles.content}>
                         {pageData.posts.length > 0 ? (

@@ -1,22 +1,8 @@
 /*== 博客筛选 ==*/
-.active {
-    grid-area: active-filters;
-    display: flex;
-    align-items: flex-start;
-    gap: var(--space-3);
-    margin-bottom: var(--space-6);
-}
-
-.activeList {
-    display: flex;
-    min-width: 0;
-    flex: 1;
-    flex-wrap: wrap;
-    gap: var(--space-2);
-}
-
 .mobileTrigger {
-    margin-left: auto;
+    grid-area: active-filters;
+    justify-self: end;
+    margin-bottom: var(--space-6);
 }
 
 .sidebar,
@@ -60,6 +46,13 @@
     display: flex;
     flex-wrap: wrap;
     gap: var(--space-2);
+}
+
+/*== 分类选中态与主操作悬停态保持一致 ==*/
+.categoryButton[aria-current="page"] {
+    border-color: var(--action-primary);
+    background: var(--action-primary);
+    color: var(--action-primary-text);
 }
 
 .tags {
@@ -120,10 +113,6 @@
 }
 
 @media (min-width: 48rem) {
-    .noActiveFilters {
-        display: none;
-    }
-
     .mobileTrigger,
     .dialog {
         display: none;
@@ -131,7 +120,11 @@
 
     .sidebar {
         display: grid;
-        grid-area: filter-sidebar;
-        align-self: start;
+        position: fixed;
+        top: calc(8rem + var(--space-12));
+        left: max(var(--space-12), calc((100% - 72rem) / 2));
+        width: 15rem;
+        max-height: calc(100dvh - 8rem - var(--space-24));
+        overflow-y: auto;
     }
 }

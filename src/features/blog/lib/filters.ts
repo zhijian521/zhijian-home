@@ -17,12 +17,6 @@ export interface BlogFilterOption {
     label: string;
 }
 
-export interface BlogActiveFilter {
-    href: string;
-    id: string;
-    label: string;
-}
-
 interface BlogHrefOptions {
     categorySlug?: string;
     page?: number;
@@ -98,30 +92,4 @@ export function buildBlogFilterOptions(
             };
         }),
     };
-}
-
-export function buildBlogActiveFilters(filters: BlogFilterState): BlogActiveFilter[] {
-    const activeFilters: BlogActiveFilter[] = [];
-    const tagSlugs = getTagSlugs(filters);
-
-    if (filters.category) {
-        activeFilters.push({
-            href: getBlogHref({ tagSlugs }),
-            id: `category:${filters.category.slug}`,
-            label: filters.category.name,
-        });
-    }
-
-    filters.tags.forEach((tag) => {
-        activeFilters.push({
-            href: getBlogHref({
-                categorySlug: filters.category?.slug,
-                tagSlugs: tagSlugs.filter((slug) => slug !== tag.slug),
-            }),
-            id: `tag:${tag.slug}`,
-            label: tag.name,
-        });
-    });
-
-    return activeFilters;
 }
