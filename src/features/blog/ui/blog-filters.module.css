@@ -108,7 +108,7 @@
 }
 
 @media (min-width: 48rem) {
-    .mobileTrigger,
+    button.mobileTrigger,
     .dialog {
         display: none;
     }
