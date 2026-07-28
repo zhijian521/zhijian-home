@@ -1,0 +1,52 @@
+/*== 右键菜单 ==*/
+.root {
+    --context-menu-background: var(--surface-raised);
+    --context-menu-hover: var(--action-primary-subtle);
+
+    position: fixed;
+    z-index: var(--z-popover);
+    min-width: 10rem;
+    border: var(--border-width-1) solid var(--border-default);
+    padding: var(--space-1) 0;
+    background: var(--context-menu-background);
+    box-shadow: 0 var(--space-2) var(--space-6) color-mix(in srgb, var(--color-ink-950) var(--alpha-20), transparent);
+}
+
+.item {
+    display: flex;
+    width: 100%;
+    min-height: 2rem;
+    align-items: center;
+    border: 0;
+    padding: 0 var(--space-3);
+    background: transparent;
+    color: var(--text-primary);
+    font: inherit;
+    font-size: var(--font-size-2);
+    text-align: left;
+    cursor: pointer;
+    transition:
+        background-color var(--duration-normal) var(--ease-standard),
+        color var(--duration-normal) var(--ease-standard);
+}
+
+.item:hover,
+.item:focus-visible {
+    background: var(--context-menu-hover);
+    color: var(--action-primary);
+    outline: 0;
+}
+
+.item:disabled {
+    color: var(--text-secondary);
+    cursor: not-allowed;
+    opacity: var(--opacity-80);
+}
+
+.item:disabled:hover {
+    background: transparent;
+}
+
+.danger {
+    color: var(--action-primary);
+}

@@ -1,0 +1,39 @@
+/*== 单行文本输入框 ==*/
+.root {
+    --input-border: var(--border-default);
+    --input-background: var(--surface-page);
+    --input-text: var(--text-primary);
+    --input-placeholder: var(--text-secondary);
+    --input-focus-border: var(--border-focus);
+    --input-focus-ring: var(--action-primary-subtle);
+    --input-transition:
+        border-color var(--duration-normal) var(--ease-standard), box-shadow var(--duration-normal) var(--ease-standard);
+
+    width: 100%;
+    min-height: 2.5rem;
+    border: var(--border-width-1) solid var(--input-border);
+    padding: 0 var(--space-3);
+    background: var(--input-background);
+    color: var(--input-text);
+    font: inherit;
+    font-size: var(--font-size-3);
+    line-height: var(--line-height-normal);
+    outline: none;
+    transition: var(--input-transition);
+}
+
+.root::placeholder {
+    color: var(--input-placeholder);
+    opacity: var(--opacity-80);
+}
+
+/*== 焦点轮廓 ==*/
+.root:focus {
+    border-color: var(--input-focus-border);
+    box-shadow: 0 0 0 var(--border-width-2) var(--input-focus-ring);
+}
+
+.root:disabled {
+    cursor: not-allowed;
+    opacity: var(--opacity-80);
+}
