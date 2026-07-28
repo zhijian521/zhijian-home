@@ -1,0 +1,108 @@
+/*== 书签与文件夹 ==*/
+.item {
+    display: inline-flex;
+    max-width: 8rem;
+    min-height: 2rem;
+    align-items: center;
+    gap: var(--space-2);
+    overflow: hidden;
+    border: var(--border-width-1) solid var(--border-default);
+    padding: 0 var(--space-3);
+    background: var(--surface-raised);
+    color: var(--text-primary);
+    font: inherit;
+    font-size: var(--font-size-2);
+    text-decoration: none;
+    cursor: pointer;
+    transition:
+        border-color var(--duration-normal) var(--ease-standard),
+        background-color var(--duration-normal) var(--ease-standard);
+}
+
+.item:hover,
+.item:focus-visible {
+    border-color: var(--action-primary);
+    background: var(--action-primary-subtle);
+    outline: 0;
+}
+
+.name {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.folder {
+    position: relative;
+}
+
+.folder .item {
+    max-width: none;
+}
+
+.folderIcon {
+    width: 1rem;
+    height: 1rem;
+    flex: 0 0 1rem;
+    color: var(--action-primary);
+}
+
+.chevron {
+    width: 0.875rem;
+    height: 0.875rem;
+    flex: 0 0 0.875rem;
+    color: var(--text-secondary);
+}
+
+/*== 文件夹浮层 ==*/
+.popup {
+    position: absolute;
+    z-index: var(--z-popover);
+    top: calc(100% + var(--space-1));
+    left: 0;
+    min-width: 10rem;
+    border: var(--border-width-1) solid var(--border-default);
+    padding: var(--space-1) 0;
+    background: var(--surface-raised);
+    box-shadow: 0 var(--space-2) var(--space-6) color-mix(in srgb, var(--color-ink-950) var(--alpha-20), transparent);
+}
+
+.popupItem {
+    display: flex;
+    min-height: 2rem;
+    align-items: center;
+    gap: var(--space-2);
+    padding: 0 var(--space-3);
+    color: var(--text-primary);
+    font-size: var(--font-size-2);
+    text-decoration: none;
+}
+
+.popupItem:hover,
+.popupItem:focus-visible {
+    background: var(--action-primary-subtle);
+    color: var(--action-primary);
+    outline: 0;
+}
+
+/*== 拖拽位置 ==*/
+.dragBefore {
+    box-shadow: calc(var(--border-width-2) * -1) 0 0 var(--action-primary);
+}
+
+.dragAfter {
+    box-shadow: var(--border-width-2) 0 0 var(--action-primary);
+}
+
+.dragInside {
+    border-color: var(--action-primary);
+    background: var(--action-primary-subtle);
+}
+
+.popupItem.dragBefore {
+    box-shadow: 0 calc(var(--border-width-2) * -1) 0 var(--action-primary);
+}
+
+.popupItem.dragAfter {
+    box-shadow: 0 var(--border-width-2) 0 var(--action-primary);
+}
