@@ -1,0 +1,22 @@
+/*== 文章封面与正文 ==*/
+.root {
+    --article-content-secondary-text: var(--text-secondary);
+
+    min-width: 0;
+}
+
+.cover {
+    margin: 0 0 var(--space-4);
+}
+
+.cover img {
+    display: block;
+    width: 100%;
+    height: auto;
+}
+
+.empty {
+    color: var(--article-content-secondary-text);
+    font-size: var(--font-size-3);
+    line-height: var(--line-height-relaxed);
+}

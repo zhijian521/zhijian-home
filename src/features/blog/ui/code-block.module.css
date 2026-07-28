@@ -1,0 +1,79 @@
+/*== 文章代码块 ==*/
+.root {
+    --code-block-background: var(--surface-muted);
+    --code-block-border: var(--border-default);
+    --code-block-button-background: var(--surface-raised);
+    --code-block-button-color: var(--text-secondary);
+    --code-block-button-hover: var(--action-primary);
+    --code-block-transition:
+        opacity var(--duration-normal) var(--ease-standard),
+        border-color var(--duration-normal) var(--ease-standard),
+        color var(--duration-normal) var(--ease-standard);
+
+    position: relative;
+    margin: var(--space-6) 0;
+    border: var(--border-width-1) solid var(--code-block-border);
+    background: var(--code-block-background);
+}
+
+.copy {
+    position: absolute;
+    z-index: 1;
+    top: var(--space-1);
+    right: var(--space-1);
+    display: inline-flex;
+    width: 1.5rem;
+    height: 1.5rem;
+    align-items: center;
+    justify-content: center;
+    border: var(--border-width-1) solid var(--code-block-border);
+    padding: 0;
+    background: var(--code-block-button-background);
+    color: var(--code-block-button-color);
+    cursor: pointer;
+    opacity: 0;
+    transition: var(--code-block-transition);
+}
+
+.root:hover .copy,
+.copy:focus-visible {
+    opacity: 1;
+}
+
+.copy:hover {
+    border-color: var(--code-block-button-hover);
+    color: var(--code-block-button-hover);
+}
+
+.copy:focus-visible {
+    outline: var(--border-width-2) solid var(--border-focus);
+    outline-offset: var(--space-1);
+}
+
+@media (hover: none) {
+    .copy {
+        opacity: 1;
+    }
+}
+
+.area {
+    display: block;
+    overflow-x: auto;
+    margin: 0;
+    padding: var(--space-4);
+    background: transparent;
+    color: var(--text-primary);
+    font-family: var(--font-mono);
+    font-size: var(--font-size-3);
+    line-height: var(--line-height-normal);
+}
+
+.root .area code {
+    display: block;
+    min-width: max-content;
+    padding: 0;
+    background: transparent;
+    color: inherit;
+    font-family: inherit;
+    font-size: inherit;
+}
