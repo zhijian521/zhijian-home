@@ -220,6 +220,7 @@
     height: auto;
     margin: var(--space-8) auto;
     border: var(--border-width-1) solid var(--markdown-border);
+    filter: brightness(var(--image-brightness));
 }
 
 .body hr {

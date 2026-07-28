@@ -19,6 +19,9 @@
     /*== 覆盖层 ==*/
     --overlay-image: color-mix(in srgb, var(--surface-page) var(--alpha-20), transparent);
 
+    /*== 图片 ==*/
+    --image-brightness: 1;
+
     /*== 边框 ==*/
     --border-default: var(--color-paper-border);
     --border-focus: var(--color-cinnabar-600);
@@ -46,6 +49,9 @@
 
         /*== 覆盖层 ==*/
         --overlay-image: color-mix(in srgb, var(--surface-page) var(--alpha-80), transparent);
+
+        /*== 图片 ==*/
+        --image-brightness: 0.7;
 
         /*== 边框 ==*/
         --border-default: var(--color-ink-border);

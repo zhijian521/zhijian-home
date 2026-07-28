@@ -31,6 +31,7 @@
     height: 7.5rem;
     flex: 0 0 7.5rem;
     border: var(--border-width-1) solid var(--border-default);
+    filter: brightness(var(--image-brightness));
     object-fit: cover;
 }
 
