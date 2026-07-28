@@ -1,0 +1,190 @@
+/*== 搜索栏 ==*/
+.root {
+    --search-focus-ring: color-mix(in srgb, var(--action-primary) var(--alpha-10), transparent);
+    --search-focus-shadow: 0 0 0 3px var(--search-focus-ring);
+
+    width: min(100%, 42rem);
+}
+
+.form {
+    display: flex;
+    min-height: 3.25rem;
+    border: var(--border-width-1) solid var(--border-focus);
+    background: var(--surface-raised);
+    box-shadow: var(--search-focus-shadow);
+}
+
+.engine {
+    position: relative;
+    flex: 0 0 auto;
+}
+
+.engine > button {
+    display: inline-flex;
+    width: 3.25rem;
+    height: 100%;
+    align-items: center;
+    justify-content: center;
+    border: 0;
+    border-right: var(--border-width-1) solid var(--border-default);
+    background: transparent;
+    color: var(--action-primary);
+    cursor: pointer;
+}
+
+.form input {
+    min-width: 0;
+    flex: 1;
+    border: 0;
+    outline: 0;
+    padding: 0 var(--space-4);
+    background: transparent;
+    color: var(--text-primary);
+    font: inherit;
+    font-size: var(--font-size-3);
+}
+
+.form input::placeholder {
+    color: var(--text-secondary);
+}
+
+.submit {
+    display: inline-flex;
+    flex: 0 0 2.25rem;
+    align-items: center;
+    justify-content: center;
+    margin: var(--space-2) var(--space-2);
+    border: 0;
+    padding: 0;
+    background: transparent;
+    color: var(--action-primary);
+    cursor: pointer;
+}
+
+.engine > button:hover,
+.submit:hover {
+    background: var(--action-primary-subtle);
+}
+
+.engine > button:focus-visible,
+.submit:focus-visible,
+.history button:focus-visible {
+    outline: var(--border-width-2) solid var(--border-focus);
+    outline-offset: calc(0px - var(--space-0-5));
+}
+
+/*== 搜索引擎 ==*/
+.engineMenu {
+    position: absolute;
+    z-index: var(--z-popover);
+    top: calc(100% + var(--space-0-5));
+    left: 0;
+    min-width: 10rem;
+    border: var(--border-width-1) solid var(--border-default);
+    padding: var(--space-1) 0;
+    background: var(--surface-raised);
+    box-shadow: 0 var(--space-2) var(--space-6) color-mix(in srgb, var(--color-ink-950) var(--alpha-20), transparent);
+}
+
+.engineMenu button {
+    display: flex;
+    width: 100%;
+    min-height: 2rem;
+    align-items: center;
+    gap: var(--space-2);
+    border: 0;
+    border-left: var(--border-width-2) solid transparent;
+    padding: 0 var(--space-3);
+    background: transparent;
+    color: var(--text-primary);
+    font: inherit;
+    font-size: var(--font-size-2);
+    text-align: left;
+    cursor: pointer;
+}
+
+.engineMenu button:hover,
+.engineMenu button:focus-visible,
+.engineMenu button.engineMenuItemActive {
+    background: var(--action-primary-subtle);
+    color: var(--action-primary);
+}
+
+.engineMenu button.engineMenuItemActive {
+    border-left-color: var(--action-primary);
+}
+
+/*== 搜索历史 ==*/
+.history {
+    margin-top: var(--space-4);
+    text-align: left;
+}
+
+.historyHeader {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: var(--space-2);
+}
+
+.history h2,
+.history button {
+    font: inherit;
+    font-size: var(--font-size-1);
+}
+
+.history h2 {
+    color: var(--text-secondary);
+    font-weight: var(--font-weight-regular);
+}
+
+.historyHeader button {
+    border: 0;
+    padding: 0;
+    background: transparent;
+    color: var(--text-secondary);
+    cursor: pointer;
+}
+
+.historyHeader button:hover {
+    color: var(--action-primary);
+}
+
+.history ul {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-2);
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+
+.history li button {
+    display: block;
+    max-width: 10rem;
+    overflow: hidden;
+    border: var(--border-width-1) solid var(--border-default);
+    padding: var(--space-1) var(--space-2);
+    background: var(--surface-muted);
+    color: var(--text-secondary);
+    cursor: pointer;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.history li button:hover {
+    border-color: var(--action-primary);
+    color: var(--action-primary);
+}
+
+@media (max-width: 40rem) {
+    .root {
+        width: 100%;
+    }
+}
+
+@media (prefers-color-scheme: dark) {
+    .root {
+        --search-focus-ring: color-mix(in srgb, var(--action-primary) var(--alpha-20), transparent);
+    }
+}
