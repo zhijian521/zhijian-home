@@ -34,13 +34,8 @@ export interface NavBookmarkDragState {
     position: "after" | "before" | "inside" | null;
 }
 
-export type NavBookmarkMovePosition = "start" | "end";
-
 export interface NavBookmarkEditorValues {
     name: string;
-    position?: NavBookmarkMovePosition;
-    /*== 未设置时表示书签栏根级 ==*/
-    targetFolderId?: string;
     url: string;
 }
 
@@ -49,5 +44,4 @@ export type NavBookmarkEditorState =
     | { type: "create-folder"; afterId?: string }
     | { type: "edit-bookmark"; bookmark: NavBookmarkItem; folderId?: string }
     | { type: "edit-folder"; folder: NavBookmarkFolder }
-    | { type: "delete"; bookmark: NavBookmark; folderId?: string }
-    | { type: "move"; bookmark: NavBookmark; folderId?: string };
+    | { type: "delete"; bookmark: NavBookmark; folderId?: string };
