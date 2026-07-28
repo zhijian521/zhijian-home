@@ -20,7 +20,7 @@
     --overlay-image: color-mix(in srgb, var(--surface-page) var(--alpha-20), transparent);
 
     /*== 边框 ==*/
-    --border-default: #e7ddd1;
+    --border-default: var(--color-paper-border);
     --border-focus: var(--color-cinnabar-600);
 
     /*== 主操作 ==*/
@@ -48,7 +48,7 @@
         --overlay-image: color-mix(in srgb, var(--surface-page) var(--alpha-80), transparent);
 
         /*== 边框 ==*/
-        --border-default: #443d2f;
+        --border-default: var(--color-ink-border);
         --border-focus: var(--color-cinnabar-400);
 
         /*== 主操作 ==*/

@@ -80,14 +80,17 @@
     --color-paper-200: #f0e6d7;
     --color-paper-300: #dfcfbb;
     --color-paper-950: #1d1612;
+    --color-paper-border: #e7ddd1;
 
     /*== 墨色 ==*/
     --color-ink-500: #73685d;
     --color-ink-700: #443d35;
     --color-ink-900: #211d18;
     --color-ink-950: #17130f;
+    --color-ink-border: #443d2f;
 
     /*== 层级 ==*/
     --z-header: 10;
+    --z-popover: 15;
     --z-loading: 20;
 }
