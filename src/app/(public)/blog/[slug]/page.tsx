@@ -5,7 +5,7 @@ import { notFound } from "next/navigation";
 
 import { TextButton } from "@/components/ui/text-button";
 import { getBlogPostDetailPageData } from "@/features/blog/lib/detail-page-data";
-import { buildPostJsonLd, buildPostMetadata } from "@/features/blog/lib/metadata";
+import { buildPostJsonLd, buildPostMetadata } from "@/features/blog/lib/detail-metadata";
 import { PostDetail } from "@/features/blog/ui/post-detail";
 
 import styles from "./page.module.css";

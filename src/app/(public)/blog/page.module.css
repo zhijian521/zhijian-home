@@ -1,7 +1,10 @@
 /*== 博客列表页 ==*/
 .page {
     --blog-background: url("/images/bg-ink.webp");
+    --blog-layout-width: 66rem;
     --blog-overlay: var(--overlay-image);
+    --blog-sidebar-gap: var(--space-16);
+    --blog-sidebar-width: 15rem;
     --blog-status-border: var(--border-default);
 
     position: relative;
@@ -36,7 +39,7 @@
     display: grid;
     grid-template-areas:
         "header"
-        "active-filters"
+        "filters"
         "content";
     row-gap: 0;
 }
@@ -87,18 +90,16 @@
     }
 
     .layout {
-        grid-template-columns: 15rem minmax(0, 1fr);
-        grid-template-areas:
-            ". header"
-            ". content";
-        align-items: start;
-        column-gap: var(--space-16);
+        /*== 固定筛选栏不参与文档流，沿用旧站有效宽度并预留左侧空间 ==*/
+        display: block;
+        width: 100%;
+        max-width: var(--blog-layout-width);
+        margin: 0 auto;
+        padding-left: calc(var(--blog-sidebar-width) + var(--blog-sidebar-gap));
     }
 
     .layoutWithoutFilters {
-        grid-template-columns: minmax(0, 1fr);
-        grid-template-areas:
-            "header"
-            "content";
+        max-width: none;
+        padding-left: 0;
     }
 }

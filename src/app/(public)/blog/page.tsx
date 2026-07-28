@@ -10,7 +10,7 @@ import { redirect } from "next/navigation";
 
 import { Pagination } from "@/components/ui/pagination";
 import { TextButton } from "@/components/ui/text-button";
-import { buildBlogJsonLd, buildBlogMetadata } from "@/features/blog/lib/metadata";
+import { buildBlogJsonLd, buildBlogMetadata } from "@/features/blog/lib/list-metadata";
 import { buildBlogFilterOptions, getBlogHref, getTagSlugs } from "@/features/blog/lib/filters";
 import { getBlogListPageData } from "@/features/blog/lib/list-page-data";
 import { parseBlogSearchParams, type BlogSearchParams } from "@/features/blog/lib/query";

@@ -14,7 +14,6 @@ interface HomePageData {
     posts: PostPreview[];
 }
 
-/*== 当前仅包含最新文章；后续 GitHub 等数据源可在此并行接入，避免页面路由累积数据处理逻辑 ==*/
 export async function getHomePageData(): Promise<HomePageData> {
     try {
         return { posts: await getLatestPosts() };

@@ -1,6 +1,6 @@
 /*== 博客筛选 ==*/
 .mobileTrigger {
-    grid-area: active-filters;
+    grid-area: filters;
     justify-self: end;
     margin-bottom: var(--space-6);
 }
@@ -24,16 +24,11 @@
     padding: var(--space-4);
 }
 
-.heading {
+.title {
     display: flex;
     min-height: 2rem;
     align-items: center;
-    justify-content: space-between;
     border-bottom: var(--border-width-1) solid var(--blog-filters-title-border);
-    gap: var(--space-3);
-}
-
-.title {
     font-family: var(--font-serif);
     font-size: var(--font-size-4);
     font-weight: var(--font-weight-semibold);
@@ -122,8 +117,8 @@
         display: grid;
         position: fixed;
         top: calc(8rem + var(--space-12));
-        left: max(var(--space-12), calc((100% - 72rem) / 2));
-        width: 15rem;
+        left: max(var(--space-12), calc((100% - var(--blog-layout-width)) / 2));
+        width: var(--blog-sidebar-width);
         max-height: calc(100dvh - 8rem - var(--space-24));
         overflow-y: auto;
     }

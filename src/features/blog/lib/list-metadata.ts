@@ -1,17 +1,16 @@
 /*============================================================================
-  blog metadata - 博客列表元数据
+  blog list metadata - 博客列表元数据
 
   根据筛选状态与分页数据生成博客列表的动态 SEO 元数据。
 ============================================================================*/
 
 import type { Metadata } from "next";
 
-import { HERO_CONTENT } from "@/config/home";
 import { DEFAULT_OG_IMAGE, SITE_METADATA } from "@/config/metadata";
-import { getBlogHref, getTagSlugs, type BlogFilterState } from "@/features/blog/lib/filters";
-import { toPostIsoDateTime } from "@/lib/core/date";
 import { serializeJsonLd } from "@/lib/core/json-ld";
-import type { PublishedPostDetail, PublishedPostsPage } from "@/types/post";
+import type { PublishedPostsPage } from "@/types/post";
+
+import { getBlogHref, getTagSlugs, type BlogFilterState } from "./filters";
 
 interface BlogMetadataData {
     filters: BlogFilterState;
@@ -99,7 +98,7 @@ export function buildBlogJsonLd({ filters, pageData }: BlogJsonLdData): string {
                 itemListElement: pageData.posts.map((post, index) => ({
                     "@type": "ListItem",
                     position: listStartIndex + index + 1,
-                    url: getPostHref(post.slug),
+                    url: new URL(`/blog/${post.slug}`, SITE_METADATA.siteUrl).toString(),
                     name: post.title,
                     description: post.summary ?? undefined,
                 })),
@@ -135,86 +134,6 @@ function buildPageDescription(filters: BlogFilterState, currentPage: number): st
     return descriptions.join(" ");
 }
 
-/*== 文章详情只声明已发布内容；数据不可用时禁止收录故障页。 ==*/
-export function buildPostMetadata(post: PublishedPostDetail | null): Metadata {
-    if (!post) {
-        return {
-            title: "文章",
-            robots: {
-                index: false,
-                follow: false,
-                noarchive: true,
-            },
-        };
-    }
-
-    const title = post.title;
-    const description = post.summary ?? SITE_METADATA.description;
-    const canonical = getPostHref(post.slug);
-    const publishedTime = toPostIsoDateTime(post.publishedAt);
-    const modifiedTime = toPostIsoDateTime(post.updatedAt);
-    const tagNames = post.tags.map((tag) => tag.name);
-
-    return {
-        title,
-        description,
-        keywords: [...tagNames, ...(post.categoryName ? [post.categoryName] : []), ...SITE_METADATA.keywords],
-        alternates: { canonical },
-        openGraph: {
-            type: "article",
-            title,
-            description,
-            url: canonical,
-            publishedTime,
-            modifiedTime,
-            authors: [HERO_CONTENT.author],
-            section: post.categoryName ?? undefined,
-            tags: tagNames,
-            images: [
-                post.coverImage
-                    ? { url: post.coverImage, alt: post.altText ?? post.title }
-                    : { url: DEFAULT_OG_IMAGE, alt: SITE_METADATA.brandTitle },
-            ],
-        },
-        twitter: {
-            card: "summary_large_image",
-            title,
-            description,
-            images: [post.coverImage ?? DEFAULT_OG_IMAGE],
-        },
-    };
-}
-
-export function buildPostJsonLd(post: PublishedPostDetail): string {
-    const canonical = getPostHref(post.slug);
-    const publishedTime = toPostIsoDateTime(post.publishedAt);
-    const modifiedTime = toPostIsoDateTime(post.updatedAt);
-    const image = post.coverImage ? new URL(post.coverImage, SITE_METADATA.siteUrl).toString() : undefined;
-
-    return serializeJsonLd({
-        "@context": "https://schema.org",
-        "@type": "BlogPosting",
-        "@id": `${canonical}#article`,
-        headline: post.title,
-        description: post.summary ?? SITE_METADATA.description,
-        image,
-        datePublished: publishedTime,
-        dateModified: modifiedTime,
-        author: {
-            "@type": "Person",
-            name: HERO_CONTENT.author,
-            url: SITE_METADATA.siteUrl.toString(),
-        },
-        mainEntityOfPage: {
-            "@type": "WebPage",
-            "@id": canonical,
-        },
-        articleSection: post.categoryName ?? undefined,
-        keywords: post.tags.map((tag) => tag.name).join(", ") || undefined,
-        inLanguage: "zh-CN",
-    });
-}
-
 function getCurrentBlogPage(pageData: Pick<PublishedPostsPage, "page" | "totalPages">): number {
     return pageData.totalPages > 0 ? Math.min(pageData.page, pageData.totalPages) : 1;
 }
@@ -225,8 +144,4 @@ function getBlogPageHref(filters: BlogFilterState, page: number): string {
         page,
         tagSlugs: getTagSlugs(filters),
     });
-}
-
-function getPostHref(slug: string): string {
-    return new URL(`/blog/${slug}`, SITE_METADATA.siteUrl).toString();
 }

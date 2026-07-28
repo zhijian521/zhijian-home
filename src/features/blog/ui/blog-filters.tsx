@@ -32,23 +32,6 @@ export function BlogFilters({ categories, tags }: BlogFiltersProps) {
     const hasCategories = categories.length > 1;
     const hasTags = tags.length > 0;
 
-    /*== 原生 dialog 的 Esc 与代码关闭都会触发 onClose，React 状态据此与模态状态保持同步 ==*/
-    useEffect(() => {
-        const dialog = dialogRef.current;
-
-        if (!dialog) {
-            return;
-        }
-
-        if (isDialogOpen && !dialog.open) {
-            dialog.showModal();
-        }
-
-        if (!isDialogOpen && dialog.open) {
-            dialog.close();
-        }
-    }, [isDialogOpen]);
-
     useEffect(() => {
         const desktopMediaQuery = window.matchMedia("(min-width: 48rem)");
 
@@ -66,6 +49,11 @@ export function BlogFilters({ categories, tags }: BlogFiltersProps) {
 
     if (!hasCategories && !hasTags) {
         return null;
+    }
+
+    function openDialog() {
+        dialogRef.current?.showModal();
+        setIsDialogOpen(true);
     }
 
     function closeDialog() {
@@ -86,7 +74,7 @@ export function BlogFilters({ categories, tags }: BlogFiltersProps) {
                 aria-expanded={isDialogOpen}
                 asButton
                 className={styles.mobileTrigger}
-                onClick={() => setIsDialogOpen(true)}
+                onClick={openDialog}
             >
                 筛选
             </Button>
@@ -129,9 +117,7 @@ function BlogFilterOptions({ categories, onSelect, tags }: BlogFilterOptionsProp
         <>
             {hasCategories ? (
                 <section className={styles.section}>
-                    <div className={styles.heading}>
-                        <h2 className={styles.title}>分类</h2>
-                    </div>
+                    <h2 className={styles.title}>分类</h2>
                     <div className={styles.categories}>
                         {categories.map((category) => (
                             <Button
@@ -151,9 +137,7 @@ function BlogFilterOptions({ categories, onSelect, tags }: BlogFilterOptionsProp
 
             {hasTags ? (
                 <section className={styles.section}>
-                    <div className={styles.heading}>
-                        <h2 className={styles.title}>标签</h2>
-                    </div>
+                    <h2 className={styles.title}>标签</h2>
                     <div className={styles.tags}>
                         {tags.map((tag) => (
                             <Button href={tag.href} isActive={tag.isActive} key={tag.href} onClick={onSelect}>
