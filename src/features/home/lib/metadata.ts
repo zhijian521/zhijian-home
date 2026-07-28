@@ -8,6 +8,7 @@ import type { Metadata } from "next";
 
 import { ABOUT_CONTENT, HERO_CONTENT } from "@/config/home";
 import { DEFAULT_OG_IMAGE, SITE_METADATA } from "@/config/metadata";
+import { serializeJsonLd } from "@/lib/core/json-ld";
 
 export const HOME_METADATA = {
     title: { absolute: SITE_METADATA.brandTitle },
@@ -57,5 +58,4 @@ const homeJsonLd = {
     ],
 };
 
-/*== 转义小于号，避免 JSON 内容提前闭合 script 标签 ==*/
-export const HOME_JSON_LD = JSON.stringify(homeJsonLd).replace(/</g, "\\u003c");
+export const HOME_JSON_LD = serializeJsonLd(homeJsonLd);

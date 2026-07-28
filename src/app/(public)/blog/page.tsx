@@ -9,7 +9,7 @@ import { redirect } from "next/navigation";
 
 import { Pagination } from "@/components/ui/pagination";
 import { TextButton } from "@/components/ui/text-button";
-import { buildBlogMetadata } from "@/features/blog/lib/metadata";
+import { buildBlogJsonLd, buildBlogMetadata } from "@/features/blog/lib/metadata";
 import { buildBlogActiveFilters, buildBlogFilterOptions, getBlogHref, getTagSlugs } from "@/features/blog/lib/filters";
 import { getBlogListPageData } from "@/features/blog/lib/list-page-data";
 import { BlogFilters } from "@/features/blog/ui/blog-filters";
@@ -66,20 +66,18 @@ export default async function BlogPage({ searchParams }: BlogPageProps) {
     const { categories, tags } = buildBlogFilterOptions(filters, filterOptions);
     const activeFilters = buildBlogActiveFilters(filters);
     const hasActiveFilters = Boolean(filters.category) || tagSlugs.length > 0;
+    const blogJsonLd = buildBlogJsonLd({ filters, pageData });
 
     return (
         <main className={styles.page}>
+            <script dangerouslySetInnerHTML={{ __html: blogJsonLd }} type="application/ld+json" />
             <div className={styles.container}>
                 <header className={styles.header}>
                     <h1 className={styles.title}>文章</h1>
                 </header>
 
                 <div className={styles.layout}>
-                    <BlogFilters
-                        activeFilters={activeFilters}
-                        categories={categories}
-                        tags={tags}
-                    />
+                    <BlogFilters activeFilters={activeFilters} categories={categories} tags={tags} />
 
                     <div className={styles.content}>
                         {pageData.posts.length > 0 ? (

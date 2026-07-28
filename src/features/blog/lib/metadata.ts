@@ -10,11 +10,17 @@ import { HERO_CONTENT } from "@/config/home";
 import { DEFAULT_OG_IMAGE, SITE_METADATA } from "@/config/metadata";
 import { getBlogHref, getTagSlugs, type BlogFilterState } from "@/features/blog/lib/filters";
 import { toPostIsoDateTime } from "@/lib/core/date";
+import { serializeJsonLd } from "@/lib/core/json-ld";
 import type { PublishedPostDetail, PublishedPostsPage } from "@/types/post";
 
 interface BlogMetadataData {
     filters: BlogFilterState;
     pageData: Pick<PublishedPostsPage, "page" | "totalPages">;
+}
+
+interface BlogJsonLdData {
+    filters: BlogFilterState;
+    pageData: Pick<PublishedPostsPage, "page" | "pageSize" | "posts" | "totalPages">;
 }
 
 export function buildBlogMetadata(blogData: BlogMetadataData | null): Metadata {
@@ -33,14 +39,10 @@ export function buildBlogMetadata(blogData: BlogMetadataData | null): Metadata {
     const { filters, pageData } = blogData;
     const tagSlugs = getTagSlugs(filters);
     /*== 超出总页数时页面会重定向到最后有效页，metadata 先据此生成规范地址 ==*/
-    const currentPage = pageData.totalPages > 0 ? Math.min(pageData.page, pageData.totalPages) : 1;
+    const currentPage = getCurrentBlogPage(pageData);
     const title = buildPageTitle(filters, currentPage);
     const description = buildPageDescription(filters, currentPage);
-    const canonical = getBlogHref({
-        categorySlug: filters.category?.slug,
-        page: currentPage,
-        tagSlugs,
-    });
+    const canonical = getBlogPageHref(filters, currentPage);
     const hasActiveFilters = Boolean(filters.category) || tagSlugs.length > 0;
 
     return {
@@ -67,6 +69,44 @@ export function buildBlogMetadata(blogData: BlogMetadataData | null): Metadata {
             images: [DEFAULT_OG_IMAGE],
         },
     };
+}
+
+/*== 列表页仅声明当前分页实际展示的文章，筛选后的派生 URL 仍沿用页面 metadata 的 noindex 策略 ==*/
+export function buildBlogJsonLd({ filters, pageData }: BlogJsonLdData): string {
+    const currentPage = getCurrentBlogPage(pageData);
+    const pageHref = getBlogPageHref(filters, currentPage);
+    const pageUrl = new URL(pageHref, SITE_METADATA.siteUrl).toString();
+    const pageName = buildPageTitle(filters, currentPage);
+    const listStartIndex = (currentPage - 1) * pageData.pageSize;
+
+    return serializeJsonLd({
+        "@context": "https://schema.org",
+        "@graph": [
+            {
+                "@type": "CollectionPage",
+                "@id": `${pageUrl}#page`,
+                url: pageUrl,
+                name: pageName,
+                description: buildPageDescription(filters, currentPage),
+                inLanguage: "zh-CN",
+                mainEntity: { "@id": `${pageUrl}#list` },
+            },
+            {
+                "@type": "ItemList",
+                "@id": `${pageUrl}#list`,
+                name: `${pageName}列表`,
+                itemListOrder: "https://schema.org/ItemListOrderDescending",
+                numberOfItems: pageData.posts.length,
+                itemListElement: pageData.posts.map((post, index) => ({
+                    "@type": "ListItem",
+                    position: listStartIndex + index + 1,
+                    url: getPostHref(post.slug),
+                    name: post.title,
+                    description: post.summary ?? undefined,
+                })),
+            },
+        ],
+    });
 }
 
 function buildPageTitle(filters: BlogFilterState, currentPage: number): string {
@@ -146,14 +186,13 @@ export function buildPostMetadata(post: PublishedPostDetail | null): Metadata {
     };
 }
 
-/*== 转义小于号，避免标题或摘要提前闭合 JSON-LD 的 script 标签。 ==*/
 export function buildPostJsonLd(post: PublishedPostDetail): string {
     const canonical = getPostHref(post.slug);
     const publishedTime = toPostIsoDateTime(post.publishedAt);
     const modifiedTime = toPostIsoDateTime(post.updatedAt);
     const image = post.coverImage ? new URL(post.coverImage, SITE_METADATA.siteUrl).toString() : undefined;
 
-    return JSON.stringify({
+    return serializeJsonLd({
         "@context": "https://schema.org",
         "@type": "BlogPosting",
         "@id": `${canonical}#article`,
@@ -174,7 +213,19 @@ export function buildPostJsonLd(post: PublishedPostDetail): string {
         articleSection: post.categoryName ?? undefined,
         keywords: post.tags.map((tag) => tag.name).join(", ") || undefined,
         inLanguage: "zh-CN",
-    }).replace(/</g, "\\u003c");
+    });
+}
+
+function getCurrentBlogPage(pageData: Pick<PublishedPostsPage, "page" | "totalPages">): number {
+    return pageData.totalPages > 0 ? Math.min(pageData.page, pageData.totalPages) : 1;
+}
+
+function getBlogPageHref(filters: BlogFilterState, page: number): string {
+    return getBlogHref({
+        categorySlug: filters.category?.slug,
+        page,
+        tagSlugs: getTagSlugs(filters),
+    });
 }
 
 function getPostHref(slug: string): string {

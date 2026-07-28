@@ -1,7 +1,7 @@
 /*============================================================================
   home page - 首页
 
-  公开路由首页，内容区块按首页迁移单元逐步接入。
+  公开路由首页，包括首屏 个人介绍 最新文章 开源项目
 ============================================================================*/
 
 import type { Metadata } from "next";
@@ -23,7 +23,6 @@ export default async function HomePage() {
 
     return (
         <main>
-            {/*== JSON-LD 仅使用本地配置，序列化时已转义危险字符 ==*/}
             <script dangerouslySetInnerHTML={{ __html: HOME_JSON_LD }} type="application/ld+json" />
             <HeroSection />
             <ProfileSection />
