@@ -1,0 +1,12 @@
+/*== 书签栏 ==*/
+.root {
+    width: min(100%, 54rem);
+}
+
+.bar {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: var(--space-2);
+    padding: var(--space-4) 0;
+}
