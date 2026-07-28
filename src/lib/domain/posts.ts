@@ -8,10 +8,18 @@ import "server-only";
 
 import { unstable_cache } from "next/cache";
 import type { RowDataPacket } from "mysql2";
+import type { Pool } from "mysql2/promise";
 
 import { getDb } from "@/lib/core/db";
 import { ServiceUnavailableError } from "@/lib/core/errors";
-import type { NormalizedPublishedPostsPageQuery, PostPreview, PublishedPostsPage, PublishedPostsPageQuery } from "@/types/post";
+import type {
+    NormalizedPublishedPostsPageQuery,
+    PostFilterOption,
+    PostPreview,
+    PublishedPostDetail,
+    PublishedPostsPage,
+    PublishedPostsPageQuery,
+} from "@/types/post";
 
 /*== 已发布文章查询的共享缓存时长 ==*/
 const LATEST_POST_LIMIT = 3;
@@ -36,6 +44,18 @@ interface PostPreviewRow extends RowDataPacket {
 
 interface PostCountRow extends RowDataPacket {
     total: number;
+}
+
+interface PublishedPostDetailRow extends PostPreviewRow {
+    content: string | null;
+    category_slug: string | null;
+    tags: number[] | string | null;
+}
+
+interface PostTagRow extends RowDataPacket {
+    id: number;
+    name: string;
+    slug: string;
 }
 
 /*== 仅查询已发布文章，排序优先使用最近更新时间，再回退发布时间 ==*/
@@ -87,6 +107,70 @@ export async function getPublishedPostsPage(query: PublishedPostsPageQuery = {})
     const { categorySlug, page, pageSize, tagSlugs } = normalizePublishedPostsPageQuery(query);
 
     return getCachedPublishedPostsPage(page, pageSize, categorySlug ?? "", tagSlugs.join(","));
+}
+
+/*== 读取单篇已发布文章；非法或不存在的 slug 返回 null，依赖故障继续向上抛出。 ==*/
+export async function getPublishedPostBySlug(slug: string): Promise<PublishedPostDetail | null> {
+    const normalizedSlug = normalizeSlug(slug);
+
+    if (!normalizedSlug) {
+        return null;
+    }
+
+    return getCachedPublishedPostBySlug(normalizedSlug);
+}
+
+const getCachedPublishedPostBySlug = unstable_cache(queryPublishedPostBySlug, ["published-post"], {
+    revalidate: PUBLISHED_POSTS_CACHE_SECONDS,
+    tags: ["published-post"],
+});
+
+async function queryPublishedPostBySlug(slug: string): Promise<PublishedPostDetail | null> {
+    const db = getDb();
+
+    if (!db) {
+        throw new ServiceUnavailableError();
+    }
+
+    try {
+        const [rows] = await db.execute<PublishedPostDetailRow[]>(
+            `
+                SELECT
+                    p.slug,
+                    p.title,
+                    p.summary,
+                    p.content,
+                    c.name AS category_name,
+                    c.slug AS category_slug,
+                    DATE_FORMAT(p.published_at, '%Y-%m-%d %H:%i:%s') AS published_at,
+                    DATE_FORMAT(p.updated_at, '%Y-%m-%d %H:%i:%s') AS updated_at,
+                    p.cover_image,
+                    p.alt_text,
+                    p.tags
+                FROM zhijian_blog_posts p
+                LEFT JOIN zhijian_blog_categories c ON p.category_id = c.id
+                WHERE p.status = ? AND p.slug = ?
+                LIMIT 1
+            `,
+            ["published", slug],
+        );
+        const row = rows[0];
+
+        if (!row) {
+            return null;
+        }
+
+        const tags = await getPublishedPostTags(db, parsePostTagIds(row.tags));
+
+        return {
+            ...toPostPreview(row),
+            content: row.content?.trim() ?? "",
+            categorySlug: row.category_slug,
+            tags,
+        };
+    } catch (error) {
+        throw new ServiceUnavailableError(error);
+    }
 }
 
 /*== 每个分页请求独立缓存，列表与总数作为同一结果返回 ==*/
@@ -242,6 +326,56 @@ function toPostPreview(row: PostPreviewRow): PostPreview {
         coverImage: getSafeCoverImage(row.cover_image),
         altText: row.alt_text,
     };
+}
+
+async function getPublishedPostTags(db: Pool, tagIds: number[]): Promise<PostFilterOption[]> {
+    if (tagIds.length === 0) {
+        return [];
+    }
+
+    const [rows] = await db.execute<PostTagRow[]>(
+        `SELECT id, name, slug FROM zhijian_blog_tags WHERE id IN (${tagIds.map(() => "?").join(", ")})`,
+        tagIds,
+    );
+    const tagsById = new Map(rows.map((tag) => [tag.id, { name: tag.name, slug: tag.slug }]));
+
+    return tagIds.flatMap((tagId) => {
+        const tag = tagsById.get(tagId);
+        return tag ? [tag] : [];
+    });
+}
+
+/*== 标签 JSON 由后台维护，但仍限制数量与 ID 范围，避免详情查询构造无界参数列表。 ==*/
+function parsePostTagIds(value: number[] | string | null): number[] {
+    let rawTagIds: unknown = value;
+
+    if (typeof value === "string") {
+        try {
+            rawTagIds = JSON.parse(value);
+        } catch {
+            return [];
+        }
+    }
+
+    if (!Array.isArray(rawTagIds)) {
+        return [];
+    }
+
+    const tagIds = new Set<number>();
+
+    for (const tagId of rawTagIds) {
+        if (!Number.isSafeInteger(tagId) || tagId < 1) {
+            continue;
+        }
+
+        tagIds.add(tagId);
+
+        if (tagIds.size === MAX_POSTS_TAG_FILTERS) {
+            break;
+        }
+    }
+
+    return [...tagIds];
 }
 
 /*== 封面地址白名单：仅接受站内绝对路径或 HTTPS ==*/

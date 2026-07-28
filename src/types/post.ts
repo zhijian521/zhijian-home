@@ -15,6 +15,13 @@ export interface PostPreview {
     altText: string | null;
 }
 
+/*== 文章详情页与后台预览共用的公开文章内容。 ==*/
+export interface PublishedPostDetail extends PostPreview {
+    content: string;
+    categorySlug: string | null;
+    tags: PostFilterOption[];
+}
+
 export interface PostFilterOption {
     name: string;
     slug: string;
