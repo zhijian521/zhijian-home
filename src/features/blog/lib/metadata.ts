@@ -37,13 +37,12 @@ export function buildBlogMetadata(blogData: BlogMetadataData | null): Metadata {
     }
 
     const { filters, pageData } = blogData;
-    const tagSlugs = getTagSlugs(filters);
     /*== 超出总页数时页面会重定向到最后有效页，metadata 先据此生成规范地址 ==*/
     const currentPage = getCurrentBlogPage(pageData);
     const title = buildPageTitle(filters, currentPage);
     const description = buildPageDescription(filters, currentPage);
     const canonical = getBlogPageHref(filters, currentPage);
-    const hasActiveFilters = Boolean(filters.category) || tagSlugs.length > 0;
+    const hasActiveFilters = Boolean(filters.category) || filters.tags.length > 0;
 
     return {
         title,
