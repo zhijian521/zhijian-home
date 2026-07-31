@@ -1,0 +1,34 @@
+/*== 内容状态 ==*/
+.root {
+    --status-border: var(--border-default);
+
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    border-top: var(--border-width-1) solid var(--status-border);
+    border-bottom: var(--border-width-1) solid var(--status-border);
+    padding: var(--space-8) 0;
+}
+
+.center {
+    align-items: center;
+    text-align: center;
+}
+
+.title {
+    font-family: var(--font-serif);
+    font-size: var(--font-size-7);
+    font-weight: var(--font-weight-semibold);
+    line-height: var(--line-height-tight);
+}
+
+.description {
+    margin-top: var(--space-3);
+    color: var(--text-secondary);
+    font-size: var(--font-size-3);
+    line-height: var(--line-height-relaxed);
+}
+
+.action {
+    margin-top: var(--space-4);
+}

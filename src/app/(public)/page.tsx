@@ -1,9 +1,3 @@
-/*============================================================================
-  home page - 首页
-
-  公开路由首页，包括首屏 个人介绍 最新文章 开源项目
-============================================================================*/
-
 import type { Metadata } from "next";
 
 import { HOME_JSON_LD, HOME_METADATA } from "@/features/home/lib/metadata";
@@ -18,15 +12,25 @@ export const metadata: Metadata = HOME_METADATA;
 /*== 静态首页每 60 秒增量更新，避免公开请求直接触发数据库查询 ==*/
 export const revalidate = 60;
 
+/*== 静态首页 ==*/
 export default async function HomePage() {
     const { posts } = await getHomePageData();
 
     return (
         <main>
+            {/*== 结构化数据 ==*/}
             <script dangerouslySetInnerHTML={{ __html: HOME_JSON_LD }} type="application/ld+json" />
+
+            {/*== 首屏展示 ==*/}
             <HeroSection />
+
+            {/*== 个人信息 ==*/}
             <ProfileSection />
+
+            {/*== 最新文章 ==*/}
             <PostsSection posts={posts} />
+
+            {/*== 开源项目 ==*/}
             <ProjectsSection />
         </main>
     );

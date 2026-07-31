@@ -3,9 +3,11 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 
-import { TextButton } from "@/components/ui/text-button";
-import { getBlogPostDetailPageData } from "@/features/blog/lib/detail-page-data";
 import { buildPostJsonLd, buildPostMetadata } from "@/features/blog/lib/detail-metadata";
+import { getBlogPostDetailPageData } from "@/features/blog/lib/detail-page-data";
+
+import { StatusPage } from "@/components/ui/status-page";
+import { TextButton } from "@/components/ui/text-button";
 import { PostDetail } from "@/features/blog/ui/post-detail";
 
 import styles from "./page.module.css";
@@ -32,30 +34,30 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
     }
 
     if (pageData.status === "unavailable") {
-        return <BlogPostUnavailable />;
+        return (
+            <StatusPage
+                className={styles.page}
+                contentClassName={styles.container}
+                description="请稍后再试，或返回文章列表继续阅读。"
+                title="文章暂时无法加载"
+            >
+                <TextButton href="/blog" icon="arrow-right">
+                    返回文章列表
+                </TextButton>
+            </StatusPage>
+        );
     }
 
-    return (
-        <main className={styles.page}>
-            <div className={styles.container}>
-                <script dangerouslySetInnerHTML={{ __html: buildPostJsonLd(pageData.post) }} type="application/ld+json" />
-                <PostDetail post={pageData.post} />
-            </div>
-        </main>
-    );
-}
+    const postJsonLd = buildPostJsonLd(pageData.post);
 
-function BlogPostUnavailable() {
     return (
         <main className={styles.page}>
             <div className={styles.container}>
-                <section aria-labelledby="blog-post-unavailable-title" className={styles.status}>
-                    <h1 id="blog-post-unavailable-title">文章暂时无法加载</h1>
-                    <p>请稍后再试，或返回文章列表继续阅读。</p>
-                    <TextButton href="/blog" icon="arrow-right">
-                        返回文章列表
-                    </TextButton>
-                </section>
+                {/*== 结构化数据 ==*/}
+                <script dangerouslySetInnerHTML={{ __html: postJsonLd }} type="application/ld+json" />
+
+                {/*== 文章详情 ==*/}
+                <PostDetail post={pageData.post} />
             </div>
         </main>
     );
