@@ -59,8 +59,8 @@
 .area {
     display: block;
     overflow-x: auto;
-    margin: 0;
-    padding: var(--space-4);
+    margin: var(--space-4);
+    padding: 0;
     background: transparent;
     color: var(--text-primary);
     font-family: var(--font-mono);
