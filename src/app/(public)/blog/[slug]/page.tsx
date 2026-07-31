@@ -1,13 +1,11 @@
-/*== 路由层处理动态参数、页面状态和 metadata；详情读取集中在博客 feature ==*/
-
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 
 import { buildPostJsonLd, buildPostMetadata } from "@/features/blog/lib/detail-metadata";
 import { getBlogPostDetailPageData } from "@/features/blog/lib/detail-page-data";
 
+import { Button } from "@/components/ui/button";
 import { StatusPage } from "@/components/ui/status-page";
-import { TextButton } from "@/components/ui/text-button";
 import { PostDetail } from "@/features/blog/ui/post-detail";
 
 import styles from "./page.module.css";
@@ -41,9 +39,9 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
                 description="请稍后再试，或返回文章列表继续阅读。"
                 title="文章暂时无法加载"
             >
-                <TextButton href="/blog" icon="arrow-right">
+                <Button href="/blog" icon="arrow-right">
                     返回文章列表
-                </TextButton>
+                </Button>
             </StatusPage>
         );
     }

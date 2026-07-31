@@ -6,10 +6,10 @@ import { buildBlogJsonLd, buildBlogMetadata } from "@/features/blog/lib/list-met
 import { getBlogListPageData } from "@/features/blog/lib/list-page-data";
 import { parseBlogSearchParams, type BlogSearchParams } from "@/features/blog/lib/query";
 
+import { Button } from "@/components/ui/button";
 import { Pagination } from "@/components/ui/pagination";
 import { StatusPage } from "@/components/ui/status-page";
 import { StatusSection } from "@/components/ui/status-section";
-import { TextButton } from "@/components/ui/text-button";
 import { BlogFilters } from "@/features/blog/ui/blog-filters";
 import { PostList } from "@/features/blog/ui/post-list";
 
@@ -36,9 +36,7 @@ export default async function BlogPage({ searchParams }: BlogPageProps) {
     if (!blogData) {
         return (
             <StatusPage className={styles.page} contentClassName={styles.container} description="文章暂时无法加载，请稍后再试。" title="文章">
-                <TextButton href="/" icon="arrow-right">
-                    返回首页
-                </TextButton>
+                <Button href="/">返回首页</Button>
             </StatusPage>
         );
     }
@@ -66,6 +64,7 @@ export default async function BlogPage({ searchParams }: BlogPageProps) {
         <main className={styles.page}>
             {/*== 结构化数据 ==*/}
             <script dangerouslySetInnerHTML={{ __html: blogJsonLd }} type="application/ld+json" />
+
             <div className={styles.container}>
                 <div className={hasFilters ? styles.layout : styles.layoutWithoutFilters}>
                     {/*== 文章筛选 ==*/}

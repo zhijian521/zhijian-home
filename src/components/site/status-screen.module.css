@@ -1,0 +1,51 @@
+/*== 全屏状态页面 ==*/
+.page {
+    --status-screen-background: url("/images/bg-ink.webp");
+    --status-screen-overlay: var(--overlay-image);
+
+    position: relative;
+    isolation: isolate;
+    display: grid;
+    min-height: 100dvh;
+    place-items: center;
+    padding: var(--space-24) var(--space-8) var(--space-16);
+    background: var(--status-screen-background) center / cover no-repeat;
+}
+
+.page::before {
+    position: absolute;
+    z-index: -1;
+    inset: 0;
+    background: var(--status-screen-overlay);
+    content: "";
+}
+
+.content {
+    width: 100%;
+    max-width: 36rem;
+}
+
+.actions {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: var(--space-3);
+}
+
+/*== 不含公开页头的状态页 ==*/
+.fullViewport {
+    min-height: 100dvh;
+}
+
+@media (min-width: 48rem) {
+    .page {
+        min-height: calc(100dvh - 5rem);
+        padding: calc(5rem + var(--space-12)) var(--space-12) var(--space-24);
+        background-attachment: fixed;
+    }
+
+    .fullViewport {
+        min-height: 100dvh;
+        padding: var(--space-24) var(--space-12);
+    }
+}

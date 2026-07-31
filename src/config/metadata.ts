@@ -13,6 +13,7 @@ import { HERO_CONTENT } from "@/config/home";
 const DEFAULT_SITE_URL = "https://yuwb.dev";
 export const DEFAULT_OG_IMAGE = "/images/og-default.webp";
 
+/*== 项目SEO配置 ==*/
 export const SITE_METADATA = {
     name: "知简",
     brandName: "Zhijian",

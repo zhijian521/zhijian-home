@@ -13,6 +13,7 @@ import "@/styles/globals.css";
 
 export const metadata: Metadata = ROOT_METADATA;
 
+/*== 项目入口布局 ==*/
 export default function RootLayout({ children }: PropsWithChildren) {
     return (
         <html data-scroll-behavior="smooth" lang="zh-CN">

@@ -9,6 +9,7 @@ import type { ReactNode } from "react";
 import { StatusSection } from "./status-section";
 
 interface StatusPageProps {
+    align?: "start" | "center";
     children?: ReactNode;
     className?: string;
     contentClassName?: string;
@@ -16,11 +17,11 @@ interface StatusPageProps {
     title: string;
 }
 
-export function StatusPage({ children, className, contentClassName, description, title }: StatusPageProps) {
+export function StatusPage({ align, children, className, contentClassName, description, title }: StatusPageProps) {
     return (
         <main className={className}>
             <div className={contentClassName}>
-                <StatusSection description={description} title={title} titleAs="h1">
+                <StatusSection align={align} description={description} title={title} titleAs="h1">
                     {children}
                 </StatusSection>
             </div>
