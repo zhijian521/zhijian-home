@@ -13,8 +13,10 @@
 }
 
 .sidebar {
+    grid-area: filters;
     display: none;
     gap: var(--space-6);
+    align-self: start;
 }
 
 .section {
@@ -115,11 +117,7 @@
 
     .sidebar {
         display: grid;
-        position: fixed;
-        top: calc(8rem + var(--space-12));
-        left: max(var(--space-12), calc((100% - var(--blog-layout-width)) / 2));
         width: var(--blog-sidebar-width);
-        max-height: calc(100dvh - 8rem - var(--space-24));
-        overflow-y: auto;
+        margin-top: var(--space-16);
     }
 }

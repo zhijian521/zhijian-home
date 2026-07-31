@@ -5,7 +5,6 @@
 ============================================================================*/
 
 import type { Metadata } from "next";
-import clsx from "clsx";
 import { redirect } from "next/navigation";
 
 import { Pagination } from "@/components/ui/pagination";
@@ -66,35 +65,37 @@ export default async function BlogPage({ searchParams }: BlogPageProps) {
         <main className={styles.page}>
             <script dangerouslySetInnerHTML={{ __html: blogJsonLd }} type="application/ld+json" />
             <div className={styles.container}>
-                <div className={clsx(styles.layout, !hasFilters && styles.layoutWithoutFilters)}>
-                    <header className={styles.header}>
-                        <h1 className={styles.title}>文章</h1>
-                    </header>
-
+                <div className={hasFilters ? styles.layout : styles.layoutWithoutFilters}>
                     {hasFilters ? <BlogFilters categories={categories} tags={tags} /> : null}
 
-                    <div className={styles.content}>
-                        {pageData.posts.length > 0 ? (
-                            <PostList posts={pageData.posts} />
-                        ) : (
-                            <section aria-labelledby="blog-empty-title" className={styles.status}>
-                                <h2 id="blog-empty-title">暂无文章</h2>
-                                <p>{hasActiveFilters ? "没有符合当前筛选条件的文章。" : "新的文章会在这里发布。"}</p>
-                            </section>
-                        )}
+                    <div className={styles.contentColumn}>
+                        <header className={styles.header}>
+                            <h1 className={styles.title}>文章</h1>
+                        </header>
 
-                        <Pagination
-                            ariaLabel="文章分页"
-                            current={currentPage}
-                            getHref={(page) =>
-                                getBlogHref({
-                                    categorySlug: filters.category?.slug,
-                                    page,
-                                    tagSlugs,
-                                })
-                            }
-                            total={pageData.totalPages}
-                        />
+                        <div className={styles.content}>
+                            {pageData.posts.length > 0 ? (
+                                <PostList posts={pageData.posts} />
+                            ) : (
+                                <section aria-labelledby="blog-empty-title" className={styles.status}>
+                                    <h2 id="blog-empty-title">暂无文章</h2>
+                                    <p>{hasActiveFilters ? "没有符合当前筛选条件的文章。" : "新的文章会在这里发布。"}</p>
+                                </section>
+                            )}
+
+                            <Pagination
+                                ariaLabel="文章分页"
+                                current={currentPage}
+                                getHref={(page) =>
+                                    getBlogHref({
+                                        categorySlug: filters.category?.slug,
+                                        page,
+                                        tagSlugs,
+                                    })
+                                }
+                                total={pageData.totalPages}
+                            />
+                        </div>
                     </div>
                 </div>
             </div>

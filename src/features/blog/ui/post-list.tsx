@@ -25,7 +25,6 @@ export function PostList({ posts }: PostListProps) {
                 /*== 列表按最近更新时间排序，展示日期也优先反映最近修订 ==*/
                 const postDate = post.updatedAt ?? post.publishedAt;
                 const formattedPostDate = formatPostDate(postDate);
-                const coverImage = post.coverImage;
 
                 return (
                     <li className={styles.item} key={post.slug}>
@@ -53,9 +52,14 @@ export function PostList({ posts }: PostListProps) {
                                     </div>
                                 </div>
 
-                                {coverImage ? (
+                                {post.coverImage ? (
                                     <div className={styles.cover}>
-                                        <img alt={post.altText ?? post.title} loading="lazy" referrerPolicy="no-referrer" src={coverImage} />
+                                        <img
+                                            alt={post.altText ?? post.title}
+                                            loading="lazy"
+                                            referrerPolicy="no-referrer"
+                                            src={post.coverImage}
+                                        />
                                     </div>
                                 ) : null}
                             </Link>

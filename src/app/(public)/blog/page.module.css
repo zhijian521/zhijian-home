@@ -38,19 +38,25 @@
 .layout {
     display: grid;
     grid-template-areas:
-        "header"
         "filters"
         "content";
     row-gap: 0;
 }
 
+.layoutWithoutFilters {
+    grid-template-areas: "content";
+}
+
+.contentColumn {
+    grid-area: content;
+    min-width: 0;
+}
+
 .header {
-    grid-area: header;
     margin-bottom: var(--space-8);
 }
 
 .content {
-    grid-area: content;
     min-width: 0;
 }
 
@@ -90,16 +96,16 @@
     }
 
     .layout {
-        /*== 固定筛选栏不参与文档流，沿用旧站有效宽度并预留左侧空间 ==*/
-        display: block;
-        width: 100%;
+        grid-template-areas: "filters content";
+        grid-template-columns: var(--blog-sidebar-width) minmax(0, 1fr);
+        column-gap: var(--blog-sidebar-gap);
         max-width: var(--blog-layout-width);
         margin: 0 auto;
-        padding-left: calc(var(--blog-sidebar-width) + var(--blog-sidebar-gap));
     }
 
     .layoutWithoutFilters {
-        max-width: none;
-        padding-left: 0;
+        grid-template-areas: "content";
+        grid-template-columns: minmax(0, 1fr);
+        max-width: var(--blog-layout-width);
     }
 }
